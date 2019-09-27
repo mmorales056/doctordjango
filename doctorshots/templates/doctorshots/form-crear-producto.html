@@ -1,0 +1,124 @@
+{% extends "doctorshots/base.html" %} 
+{% load staticfiles%} 
+{% block titulo %} Inventario {% endblock %} 
+{% block body %}<body class="body-inventario">{% endblock %} 
+{% block header %}<header class="header-empleado"> {% endblock %}
+ {% block contenedor %}
+        <div class="container-fluid mt-4">
+            <!--Escritorio-->
+            <div class="d-none d-sm-none d-md-block">
+                <div class="row">
+                    <!--FORMULARIO-->
+                    <div class="col-md-3 col-lg-3 col-xl-3 ">
+                        <div class="card-body ">
+                            <form action="{% url 'doctorshots:guardarproducto'%}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label class="labelForm">Codigo de producto</label>
+                                    <input type="text" name="codigoProducto" class="form-control">
+                                </div>
+                                <div class="form-group ">
+                                    <label class="campos labelForm">Nombre</label>
+                                    <input type="text" name="nombreProducto" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos labelForm">precio de venta</label>
+                                    <input type="number" name="precioVenta" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos labelForm">Costo</label>
+                                    <input type="number" name="precioCompra" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos labelForm">Cantidad</label>
+                                    <input type="number" name="cantidad" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos labelForm">habilitado</label><br>
+                                    <select name="habilitado" class="browser-default custom-select">
+                                <option selected>Elige</option>
+                                <option class="font-drop upper font-color-drop-little" value="1">habilitado</option>
+                                <option class="font-drop upper font-color-drop-little" value="2">deshabilitado</option>
+                            </select>
+                                </div>
+                                <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+                            </form>
+                        </div>
+                    </div>
+                    <!--TABLA-->
+                    <div class="col-lg-9 col-xl-9">
+                        <div class="card-body">
+                            <table class="table table-dark opacity">
+                                <thead>
+                                    <tr>
+                                        <th class="font-drop upper font-color-drop">Codigo</th>
+                                        <th class="font-drop upper font-color-drop">Nombre</th>
+                                        <th class="font-drop upper font-color-drop">Precio</th>
+                                        <th class="font-drop upper font-color-drop">Cantidad</th>
+                                        <th class="font-drop upper font-color-drop">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for producto in productos %}
+                                    <tr>
+                                        <td class="font-pacman">{{producto.codigoProducto}}</td>
+                                        <td class="font-pacman">{{producto.nombreProducto}}</td>
+                                        <td class="font-pacman">{{producto.precioVenta}}</td>
+                                        <td class="font-pacman">{{producto.cantidad}}</td>
+                                        <td>
+                                            <a class="btn btn-info font-drop">Ver</a>
+                                            <a class="btn btn-warning font-drop">Editar</a>
+                                            <a class="btn btn-danger font-drop" href="#">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Movil-->
+            <div class="d-block d-sm-block d-md-none">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                         <div class="card-body">
+                            <table class="table table-dark opacity">
+                                <thead>
+                                    <tr>
+                                        <th class="font-drop upper font-color-drop">Codigo</th>
+                                        <th class="font-drop upper font-color-drop">Nombre</th>
+                                        <th class="font-drop upper font-color-drop">Precio</th>         
+                                        <th class="font-drop upper font-color-drop">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for producto in productos %}
+                                    <tr>
+                                        <td class="font-pacman">{{producto.codigoProducto}}</td>
+                                        <td class="font-pacman">{{producto.nombreProducto}}</td>
+                                        <td class="font-pacman">{{producto.precioVenta}}</td>
+                                        <td class="font-pacman">{{producto.cantidad}}</td>
+                                        <td>
+                                            <a class="btn btn-warning font-drop">ver</a>          
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+{% endblock %}

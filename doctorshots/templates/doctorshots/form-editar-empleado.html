@@ -10,14 +10,14 @@
         <input type="text" name="cedula" class="form-control" value="{{ empleado.cedula }}" readonly>
     </div>
 
-      <div class="form-group">
+    <div class="form-group">
         <input type="text" name="nombres" class="form-control" value="{{ empleado.nombres }}" readonly>
     </div>
 
 
 
     <div class="form-group">
-        <input type="text" name="usuario" class="form-control" value="{{ empleado.usuario }}" readonly >
+        <input type="text" name="usuario" class="form-control" value="{{ empleado.usuario }}" readonly>
     </div>
 
 
@@ -25,7 +25,7 @@
         <input type="text" name="clave" class="form-control" placeholder="clave">
     </div>
 
-    <div class="form-group" hidden="true"> 
+    <div class="form-group" hidden="true">
         <label class="font-drop upper font-color-drop-little">Rol</label><br>
         <select name="Rol" class="browser-default custom-select">                                
                              {% if empleado.Rol == '2' %}   <option class="font-drop upper font-color-drop-little" value="2"  selected="selected" >Administrador</option>
@@ -36,6 +36,16 @@
 
                             </select>
     </div>
-
-    <input type="submit" name="accion" value="Editar" class="btn btn-info">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <input type="submit" name="accion" value="Editar" class="btn btn-info">
+            </div>
+            <div class="d-block d-sm-block d-md-none">
+                <div class="col-6">
+                    <a class="btn btn-danger font-drop" href="{% url 'doctorshots:eliminarempleado' empleado.id %}">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

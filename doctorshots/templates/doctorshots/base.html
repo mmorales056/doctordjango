@@ -16,6 +16,7 @@
 </head>
 {% block body %} {% endblock  %}
 {% block header %} {% endblock %}
+<!--INVITADO-->
 {% if request.session.logueado.3 != '1' and request.session.logueado.3 != '2' %}
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
     <a class="navbar-brand" href="{% url 'doctorshots:inicio' %}">
@@ -46,6 +47,8 @@
 
     </div>
 </nav>
+
+<!--ADMIN-->
 {% elif request.session.logueado.3 == '2' and request.session %}
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
     <a class="navbar-brand" href="#">
@@ -60,10 +63,10 @@
                 <a class="nav-link" href="{% url 'doctorshots:formempleado' 'false' %}"> Empleados <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link"  onclick="complementview()" href="#"> Carta <span class="sr-only">(current)</span></a>
+                <a class="nav-link"  href="{% url 'doctorshots:formproductos' 'false' %}"> Inventario <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Inventario</a>
+                <a class="nav-link" href="#">Carta</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link " href="#">Ventas</a>
@@ -80,7 +83,6 @@
 
     </div>
 </nav>
-
 {% endif %}
 
 {% block contenedor %}

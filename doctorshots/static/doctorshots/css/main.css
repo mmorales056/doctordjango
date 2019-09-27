@@ -37,7 +37,7 @@
 .mt-4,
 .my-4 {
     margin-top: 1.5rem!important;
-    padding-top: 60px;
+    padding-top: 50px;
 }
 
 div .card {
@@ -121,3 +121,7 @@ div div div div div form div.campos {
 
 
 /*  Inventario */
+
+.labelForm {
+    color: white;
+}

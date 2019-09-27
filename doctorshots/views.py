@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.forms.models import model_to_dict
-from doctorshots.models import Usuarios
+from doctorshots.models import Usuarios,Productos
 
 # Create your views here.
 '''inicio'''
@@ -95,5 +95,41 @@ def actualizarEmpleado(requuest):
 def crearEmpleadoMovil(request):
     try:
         return render(request,'doctorshots/crear-empleado-movil.html')
+    except Exception as e:
+        return HttpResponse(e)
+#Este metodo Elimina un empleado
+def eliminarEmpleado(request,id):
+    try:
+        q = Usuarios.objects.get(pk=id)
+        q.delete()
+        return  HttpResponseRedirect(reverse('doctorshots:formempleado',args=('Eliminado',)))
+    except Exception as e:
+        return HttpResponse(e)
+
+
+'''PRODUCTOS INVENTARIO'''
+#Metodo que despliega el formulario Productos en la pantalla
+def formularioProductos(request,mensaje):
+    try:
+        ses = request.session.get('logueado',False)
+        if ses and ses[3]=='2':
+            p = Productos.objects.all()
+            contexto= {'productos': p, 'mensaje': mensaje}
+            return render(request,'doctorshots/form-crear-producto.html',contexto)
+    except Exception as e:
+        return HttpResponse(e)
+    
+def guardarProducto(request):
+    try:
+        producto = Productos(
+            codigoProducto = request.POST['codigoProducto'],
+            nombreProducto= request.POST['nombreProducto'],
+            precioVenta = request.POST['precioVenta'],
+            precioCompra = request.POST['precioCompra'],
+            habilitado = request.POST['habilitado'],
+            cantidad = request.POST['cantidad']
+        )
+        producto.save()
+        return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=('GuardadoCorrectamente',)))
     except Exception as e:
         return HttpResponse(e)

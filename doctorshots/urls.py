@@ -14,5 +14,9 @@ urlpatterns = [
     path('guardarempleado', views.guardarEmpleado, name= 'guardarempleado'),
     path('editarempleado/<int:id>', views.formularioActualizarEmpleado, name= 'editarempleado' ),
     path('actualizarempleado', views.actualizarEmpleado, name= 'actualizarempleado'),
-    path('crearempleadomovil',views.crearEmpleadoMovil, name='crearempleadomovil')
+    path('crearempleadomovil',views.crearEmpleadoMovil, name='crearempleadomovil'),
+    path('eliminarempleado/<int:id>', views.eliminarEmpleado, name='eliminarempleado'),
+    #MODULO PRODUCTOS
+    path('formproductos/<str:mensaje>', views.formularioProductos, name='formproductos'),
+    path('guardarproducto', views.guardarProducto, name='guardarproducto')
 ]
