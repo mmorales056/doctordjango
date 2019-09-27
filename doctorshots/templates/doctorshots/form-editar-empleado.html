@@ -1,0 +1,41 @@
+<form action="{% url 'doctorshots:actualizarempleado' %}" method="POST">
+    {% csrf_token %}
+
+
+    <div class="form-group">
+        <input type="hidden" name="id" class="form-control" value="{{ empleado.id}}" readonly>
+    </div>
+
+    <div class="form-group">
+        <input type="text" name="cedula" class="form-control" value="{{ empleado.cedula }}" readonly>
+    </div>
+
+      <div class="form-group">
+        <input type="text" name="nombres" class="form-control" value="{{ empleado.nombres }}" readonly>
+    </div>
+
+
+
+    <div class="form-group">
+        <input type="text" name="usuario" class="form-control" value="{{ empleado.usuario }}" readonly >
+    </div>
+
+
+    <div class="form-group">
+        <input type="text" name="clave" class="form-control" placeholder="clave">
+    </div>
+
+    <div class="form-group" hidden="true"> 
+        <label class="font-drop upper font-color-drop-little">Rol</label><br>
+        <select name="Rol" class="browser-default custom-select">                                
+                             {% if empleado.Rol == '2' %}   <option class="font-drop upper font-color-drop-little" value="2"  selected="selected" >Administrador</option>
+
+                             {% elif empleado.Rol == '1' %} 
+                                    <option class="font-drop upper font-color-drop-little" value="1"  selected="selected">Empleado</option>
+                            {% endif %}
+
+                            </select>
+    </div>
+
+    <input type="submit" name="accion" value="Editar" class="btn btn-info">
+</form>

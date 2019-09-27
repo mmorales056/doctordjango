@@ -1,0 +1,435 @@
+/*General*/
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+*{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.li {
+    color:#fff;
+}
+/* </editor-fold> */
+
+
+/*Contenido  principal*/
+
+
+/*Contenido General-parte uno carrusel*/
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+
+/*parte Uno del contenido principal*/
+/*parte de Bienvenida-Carrusel*/
+.carousel-inner img {
+    width: 100%;
+    height: 80vh;
+}
+.letra {
+    font-size: 64px;
+    top: 200px;
+    bottom: 150px;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    right: 15%;
+    left: 15%;
+    z-index: 10;
+    padding-top: 25px;
+    padding-bottom: 0;
+    color: #fff;
+    text-align: center;
+}
+/* </editor-fold> */
+
+/*seccion --licores*/
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+/*secccion dos*/
+.section-b {
+    background-attachment: fixed;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    margin: auto;
+    background: #000000;    
+}
+.section-b-carta-a {
+    background-image: url(../imagenes/Contenido-bebidaUno.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 350px;
+    height:65vh;
+    margin: 5px;
+    box-shadow: 10px 6px 77px -46px rgba(255,255,255,1);
+}
+
+.section-b-carta-aa {
+    background-image: url(../imagenes/Contenido-bebidaDos.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 350px;
+    height:65vh;
+    margin: 5px;
+    box-shadow: 10px 6px 77px -46px rgba(255,255,255,1);
+}
+
+.section-b-carta-b {
+    background-image: url(../imagenes/Contenido-bebidaTres.jpg);
+    width: 345px;
+    height:70vh;
+    margin: 5px;
+    border-radius: 5px;
+    box-shadow: 10px 6px 77px -46px rgba(255,255,255,1);
+}
+
+.title-section-b {
+    font-size: 30px;
+    color: #fff;
+    position: relative;
+    top: 104%;
+    margin: auto;
+}
+
+.title-section-v {
+    font-size: 40px;
+    color:#ffffff;
+    position: relative;
+    margin: auto;
+}
+
+.contenido-section-b {
+    position: absolute;
+    top: 310px;
+    margin: 30px;
+    color:#7E1F41;
+    font-size: 20px;
+}
+.b-seccion {
+    position: relative;
+    height: 50px;
+    width: 200px;
+    padding: 10px;
+    color:#fff;
+    font-size: 20px;
+    text-decoration: none;
+    margin: auto;
+    background: #000000;
+}
+.b-seccion, a{
+    text-decoration: none;
+    text-align: center;
+}
+.b-seccion:hover {
+    color: #ffffff;
+    transition: 1s;
+    background: #efb810;
+    text-decoration: none;
+    
+}
+
+/***********************************************/
+
+
+.cont {
+    margin: auto;
+    margin-right: 0;
+    background: #ffffff;
+}
+
+.contdos {
+    top: 15px;
+    margin: auto;
+    margin-right: 0;
+    background: #000000;
+}
+
+.section-4 {
+    background: #ffffff;
+    padding-bottom: 30px;
+}
+
+.section-4 .cont{
+    overflow-x: hidden; 
+}
+.contPrincipal {
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.base {
+    background-image: linear-gradient(to right top, #000000, #1c1c1c, #313131, #484848, #606060);
+    box-shadow: 4px 9px 29px 6px;
+    width: 350px;
+    height: 65vh;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin: auto;
+}
+.baseUno {
+    background: #000000;
+    box-shadow: 4px 9px 29px 6px;
+    height: 70vh;
+    width: 70vh;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 8%;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-iteration-count:2;
+}
+.baseDos {
+    background: #ffffff;
+    height: 70vh;
+    width: 70vh;
+    border-radius: 5px;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 8%;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-iteration-count:2;
+    box-shadow: 0px -2px 33px -4px rgba(255,255,255,1);
+}
+
+.section-d {
+    background: #ffffff;
+}
+
+.section-s-titulo {
+    margin: auto;
+    padding: 2rem;
+    top: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 2rem;
+    
+}
+
+.section-s-contenido {
+    font-size: 30px;
+    color: #fff;
+    margin: 35px;
+    top: 1px;
+    padding: 4px;
+}
+
+.section-ss-titulo {
+    margin: auto;
+    padding: 2rem;
+    top: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+    font-size: 2rem;
+    
+}
+
+.section-ss-contenido {
+    color: #000000;
+    margin: 35px;
+    top: 1px;
+    padding: 4px;
+}
+/* </editor-fold> */
+
+/*Menu de licores*/
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+.section-bebidas-c {
+    background-repeat: no-repeat;
+    background-size:100%;
+    width: 100%;
+    height: 70vh;
+    background-image:url(../imagenes/seccion-cervezas.jpg) ;
+}
+
+.section-bebidas-lic {
+    background-repeat: no-repeat;
+    background-size:100%;
+    width: 100%;
+    height: 70vh;
+    background-image:url(../imagenes/seccion-licores.jpg!d) ;
+}
+.section-bebidas-cer {
+    background: rgba(239, 184, 16, .100);
+    width: 400px;
+    height: 200px;
+    top: 100px;
+    left: 100px;
+    position: relative;
+} 
+
+.section-bebidas-cer .title-section-bebidas {
+    position: relative;
+    display: flex;
+    top: 30px;
+    color:#ffffff;
+    justify-content: center;
+    text-align: center;
+    font-size: 70px;
+    font-weight: 100px;
+}
+
+.p-section-bebidas {
+    font-size: 22px;
+    color: #efb810;
+    top: 60px;
+    display: flex;
+    position: relative;
+    margin: auto;
+    justify-content: center;
+}
+
+.btn-section-c  {
+    display: flex;
+    justify-content: center;
+    top: 20px;
+    bottom: 30px;
+}
+.btn-section-c .btn-c {
+    background:#efb810;
+    color: white;
+    margin: 40px;
+    width: 200px;
+    padding: 15px;
+}
+
+/*seccion de cartas*/
+.ce {
+    background: #000000;
+}
+.lic {
+    background: #000000;
+}
+
+.user-card {
+    border-radius: 5px;
+    background: #efb810;
+    height: 450px;
+    margin:60px;
+    width: 310px;
+    position: relative;
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 3px 14px 41px -15px rgba(255,255,255,1);
+}
+
+.info {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.name {
+    display: flex;
+    text-align: center;
+    font-size: 15px;
+    color: white;
+    position: relative;
+    margin: auto;
+    top: 90px;  
+}
+
+.profession {
+    font-size: 25px;
+    color: white;
+    position: absolute;
+    top: 180px; 
+}
+
+.div {
+    position: absolute;
+    height: 1.5px;
+    width: 50px;
+    top: 220px; 
+    background-color: white;
+}
+
+.desc {
+    position: absolute;
+    top: 230px;
+    color: white;
+    text-align: center;
+    line-height: 28px;
+}
+
+.foto {
+    height: 100%;
+    width: 100%;
+    background:#efb810;
+    background-image: url(../imagenes/clubcolombia.png);
+    background-repeat:no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom: 0;
+    background-size: 100% 100%; 
+    border-radius: 5px;
+    transition: 1s;
+}
+
+.user-card:hover .foto {
+    transform: scale(0.5, 0.35) translateY(-650px);
+    background-size: 100% 150%;
+    background-position: 0 -25px;
+    border-radius:50%;
+
+/* </editor-fold> */
+
+
+/*contenido de Descubra mas*/
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+
+/* </editor-fold> */
+
+/*footer--Diseño Secundario*/
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+.footerper {
+    background: #2b3553;
+    text-align: center;
+    padding: 24px 30px;
+    padding-left: 30px !important;
+}
+
+.footerper .navper {
+    float: left;
+    margin-bottom: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-block;
+}
+.navper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.footerper .copyright {
+    font-size: .75rem;
+    line-height: 1.8;
+    color: black;
+
+}
+/* </editor-fold> */
+
+/* <editor-fold defaultstate="collapsed" desc="Código Acumulado"> */
+.btnError {
+    background: #7E1F41;
+    color: #fff;
+}
+.btnError:hover {
+    background: #7E1F41;
+    color: #fff;
+}
+/* </editor-fold> */
+

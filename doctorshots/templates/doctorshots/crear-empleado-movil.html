@@ -1,0 +1,29 @@
+ <form action="{% url 'doctorshots:guardarempleado' %}" method="POST">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label class="campos">Cedula</label>
+                                    <input type="text" name="cedula" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="campos">Nombres</label>
+                                    <input type="text" name="nombres" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="campos">Usuario</label>
+                                    <input type="text" name="usuario" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos">Contraseña</label>
+                                    <input type="text" name="clave" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos">Rol</label><br>
+                                    <select name="Rol" class="browser-default custom-select" readonly>      <option class="font-drop upper font-color-drop-little" value="1" selected="selected">Empleado</option>                                      
+                                    </select>
+                                </div>
+
+                                <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+                            </form>

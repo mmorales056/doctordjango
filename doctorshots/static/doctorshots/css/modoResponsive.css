@@ -1,0 +1,166 @@
+/*parte del header*/
+@media only screen and (max-width: 768px) {
+
+   .navmodu {
+       overflow: hidden;
+       display: none;
+   }
+   .navulsuno {
+       display:flex !important;
+       flex-flow: column;
+       top: 150px;
+       left: 3px;
+       justify-content: center;
+       margin: auto;
+       height: 30vh;
+       text-align: center;
+       position: absolute;
+       
+   } 
+
+   .items-navbar{
+       display:flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       list-style: none;
+       margin-top: -100px;
+       height: 40vh
+       
+   }
+
+   .navmodu.navactivo {
+       position: absolute;
+       display: block !important;
+       width: 100%;
+       background: black;
+       z-index: -1;
+       padding: 200px;
+       height: 50vh;
+       transition: linear 1s;
+   }
+
+   .navsingup {
+       width: 60%;
+   }
+
+
+   /*******************************/
+   .toogle-menu {
+       position: absolute;
+       right : 3px;
+       display: block;
+       width: 40px;
+       height: 40px;
+       margin: 25px;
+       background: transparent;
+       cursor: pointer;
+       color: #510823;
+   }
+   .toogle-menu:before {
+       position: absolute;
+       line-height: 40px;
+   }
+   .fa-bars {
+       visibility: visible;
+       font-size: 45px;    
+   }
+
+
+
+
+   /*******************************/
+
+   .navlogoVT .snavlogoVT {
+       width: 100%;
+       height: 100%;
+       align-items: center;
+   }
+}
+
+/*section uno 768px*/
+@media(max-width: 768px){
+   .letra {
+       font-size: 37px !important;
+       bottom: 200px !important;
+   }
+}
+/*400px*/
+@media all and(min-width: 350px){
+   
+}
+
+/*seccion dos*/
+@media (max-width: 768px) {
+   .section-b {
+       height: 250vh;
+   }
+
+   .section-b-carta-a {
+       margin: auto;
+       top: 20px;
+       display: flex;
+   }
+   .section-b-carta-aa {
+       margin: auto;
+       top: 20px;
+       display: flex;
+   }
+   .section-b-carta-b {
+       margin: auto;
+       top: 20px;
+       display: flex;
+   }
+
+   .title-section-b {
+       font-size: 55px;
+       position: relative;
+       top: -3px;
+       color: black;
+   }
+   .title-section-v {
+       top: -89px;
+       color: white;
+   }
+}
+
+@media (min-width: 350px) {
+
+   .section-b-carta-b {
+       margin: auto;
+       margin-top: 20px;
+       margin-bottom: 20px;
+       display: flex;
+   }
+}
+/*seccion tres*/
+@media(max-width: 768px){
+   .baseUno {
+       width: 59vh;
+       margin: auto;
+       margin-top: 25px;
+       margin-bottom: 25px;
+   }
+   .baseDos {
+       width: 59vh;
+       margin: auto;        
+       margin-top: 25px;
+       margin-bottom: 25px;
+   }
+}
+
+
+/*seccion rol cliente*/
+@media only screen and(max-width: 768px){
+   .conuno {
+       margin: auto;
+       height: 60vh;
+   } 
+   .condos {
+       margin: auto;
+       height: 60vh;
+   }
+   .contres {
+       margin: auto;
+       height: 60vh;
+   }

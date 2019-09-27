@@ -1,0 +1,196 @@
+{% extends "doctorshots/base.html" %} {% load staticfiles%} {% block titulo %} Inventario {% endblock %} {% block body %}
+
+<body class="body-empleado">{% endblock %} {% block header %}
+    <header class="header-empleado">{% endblock %} {% block contenedor %}
+        <div class="container-fluid mt-4">
+            <!--Escritorio-->
+            <div class="d-none d-sm-none d-md-block">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        {% if '1062' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ya existe un empleado con esta cedula
+                        </div>
+                        {% elif '1265' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ingrese una cedula valida
+
+                        </div>
+                        {% elif '1264' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ingrese una cedula valida
+                        </div>
+                        {% elif '1366' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ingrese solo numeros en la cedula
+                        </div>
+                        {% elif '1406' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            seleccione un rol
+                        </div>
+                        {% elif 'GuardadoCorrectamente' in mensaje %}
+                        <div class="alert alert-success" role="alert">
+                            Empleado Guardado con exito
+                        </div>
+                        {% endif %}
+                        <div class="card-body ">
+                            <form action="{% url 'doctorshots:guardarempleado' %}" method="POST">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label class="campos">Cedula</label>
+                                    <input type="text" name="cedula" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="campos">Nombres</label>
+                                    <input type="text" name="nombres" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="campos">Usuario</label>
+                                    <input type="text" name="usuario" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos">Contraseña</label>
+                                    <input type="text" name="clave" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="campos">Rol</label><br>
+                                    <select name="Rol" class="browser-default custom-select" readonly>      <option class="font-drop upper font-color-drop-little" value="1" selected="selected">Empleado</option>                                      
+                                    </select>
+                                </div>
+
+                                <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8">
+                        <div class="card-body ">
+                            <table class="table table-dark opacity">
+                                <thead>
+                                    <tr>
+                                        <th class="font-drop upper font-color-drop">Cedula</th>
+                                        <th class="font-drop upper font-color-drop">Usuario</th>
+                                        <th class="font-drop upper font-color-drop">Rol</th>
+                                        <th class="font-drop upper font-color-drop">Acciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for empleado in datos %}
+                                    <tr>
+                                        <td class="font-Neon">{{empleado.cedula}} </td>
+                                        <td class="font-pacman">{{empleado.nombres}}</td>
+                                        {%if empleado.Rol == '2' %}
+                                        <td><img src=" {% static 'doctorshots/img/administrador.png' %}"></td>
+                                        {% elif empleado.Rol == '1' %}
+                                        <td><img src="{% static 'doctorshots/img/barman.png' %}"> </td>
+                                        {% endif %}
+
+                                        <td>
+                                            <a class="btn btn-warning font-drop" data-toggle="modal" data-target="#modalEmpleado" onclick="editarEmpleado('{% url 'doctorshots:editarempleado' empleado.id %} ') ">Editar</a>
+
+                                            <a class="btn btn-danger font-drop" href="">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--Movil-->
+            <div class="d-block d-sm-block d-md-none">
+                <div class="row">
+                    <div class=" col-10 col-sm-10">
+                     {% if '1062' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ya existe un empleado con esta cedula
+                        </div>
+                        {% elif '1265' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ingrese una cedula valida
+
+                        </div>
+                        {% elif '1264' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ingrese una cedula valida
+                        </div>
+                        {% elif '1366' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            Ingrese solo numeros en la cedula
+                        </div>
+                        {% elif '1406' in mensaje %}
+                        <div class="alert alert-danger" role="alert">
+                            seleccione un rol
+                        </div>
+                        {% elif 'GuardadoCorrectamente' in mensaje %}
+                        <div class="alert alert-success" role="alert">
+                            Empleado Guardado con exito
+                        </div>
+                        {% endif %}
+                        <div class="card-body ">
+                            <table class="table table-dark opacity">
+                                <thead>
+                                    <tr>
+                                        <th class="font-drop upper font-color-drop">Cedula</th>
+                                        <th class="font-drop upper font-color-drop">Nombres </th>
+                                        <th class="font-drop upper font-color-drop">Rol</th>
+                                        <th class="font-drop upper font-color-drop">Ver</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for empleado in datos %}
+                                    <tr>
+                                        <td class="font-Neon">{{empleado.cedula}} </td>
+                                        <td class="font-pacman">{{empleado.nombres}}</td>
+                                        {%if empleado.Rol == '2' %}
+                                        <td><img src=" {% static 'doctorshots/img/administrador.png' %}"></td>
+                                        {% elif empleado.Rol == '1' %}
+                                        <td><img src="{% static 'doctorshots/img/barman.png' %}"> </td>
+                                        {% endif %}
+                                        <td>
+                                            <a class="btn btn-warning font-drop" data-toggle="modal" data-target="#modalEmpleado" onclick="editarEmpleado('{% url 'doctorshots:editarempleado' empleado.id %} ') ">Ver</a>
+
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <a class="btn btn-success font-drop" data-toggle="modal" data-target="#modalEmpleado" onclick="crearEmpleadoMovil('{% url 'doctorshots:crearempleadomovil'%} ') ">Crear Empleado</a>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--Modal editar Empleado-->
+        <div class="modal fade" id="modalEmpleado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Editar Empledo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body" id="modaleditar">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}

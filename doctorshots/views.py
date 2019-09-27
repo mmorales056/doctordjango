@@ -1,0 +1,99 @@
+from django.shortcuts import render
+from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
+from django.urls import reverse
+from django.forms.models import model_to_dict
+from doctorshots.models import Usuarios
+
+# Create your views here.
+'''inicio'''
+# Este metodo se encarga de pintarme redireccionarme al index   
+def index(request):
+    return render(request,'doctorshots/index.html')
+
+'''login'''
+# Este metodo se encarga de pintarme redireccionarme al fornmulario login        
+def formularioLogin(request,mensaje):
+    contexto = {'mensaje':mensaje }
+    return render(request,'doctorshots/formulario-login.html',contexto)
+#Este metodo se encarga de hacer el login y construir variable de session
+def login(request):
+    try:
+        usuario = request.POST['usuario']
+        password = request.POST['clave']
+        q= Usuarios.objects.get(usuario = usuario)
+        if q.clave == password:
+            request.session['logueado'] = [q.cedula, q.nombres, q.clave, q.Rol ]
+            return render(request,'doctorshots/index.html')
+        else:
+            return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=('password invalid',)))
+                                                
+    except Exception as e:
+        return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=(e,)))
+#Este metodo se encarga de cerrar la session
+def logout(request):
+    try:
+        del request.session['logueado']
+        return render(request, 'doctorshots/index.html')
+    
+    except Exception as e:
+        return render(request, 'doctorshots/index.html')
+
+'''Empleados'''
+#Este metodo se encarga de mostrar el html formulario de empleado
+def formularioEmpleados(request, mensaje):
+    try:
+        ses = request.session.get('logueado',False)
+        if ses and ses[3]=='2':
+            q= Usuarios.objects.all()
+            contexto = {'datos': q, 'mensaje': mensaje }
+            return render(request,'doctorshots/form-crear-empleado.html',contexto)
+        else:
+            contexto = {'s':'fallo'}
+            return  render(request,'doctorshots/index.html',contexto)
+        
+    except Exception as e:
+        return HttpResponse(e)
+# Este metodo Guarda un empleado
+def guardarEmpleado(request):
+   try:
+       empleado = Usuarios(
+            cedula = request.POST['cedula'],
+            nombres= request.POST['nombres'],
+            usuario = request.POST['usuario'],
+            clave = request.POST['clave'],
+            Rol = request.POST['Rol']
+        )
+              
+       empleado.save()
+       return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=('GuardadoCorrectamente',)))
+   
+   except Exception as e:
+       return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=(e,)))
+#Este metodo se encarga de cargarme el template para actualizar el empleado desde un escritorio
+def formularioActualizarEmpleado(request,id):
+    try:
+        q = Usuarios.objects.get(pk=id)
+        contexto = {'empleado': q}
+        return render(request,'doctorshots/form-editar-empleado.html',contexto)
+    except Exception as e:
+        return HttpResponse(e)
+#Este metodo se encarga de cargarme el template para actualizar el empleado
+def actualizarEmpleado(requuest):
+    try:
+        id = request.POST['id']
+        q = Usuarios.objects.get(pk=id)
+        q.cedula= request.POST['cedula']
+        q.nombres= request.POST['nombres']
+        q.usuario= request.POST['usuario']
+        q.clave= request.POST['clave']        
+        q.save()
+        return HttpResponseRedirect(reverse('doctorshots:formempleado' ,args=('actualizado correctamente',)))
+    
+    except Exception as e:
+        return HttpResponse(e)
+#Este metodo se encarga de cargarme el formulario para crear un empleado desde un movil 
+def crearEmpleadoMovil(request):
+    try:
+        return render(request,'doctorshots/crear-empleado-movil.html')
+    except Exception as e:
+        return HttpResponse(e)
