@@ -1,0 +1,32 @@
+<form action="{% url 'doctorshots:guardarproducto'%}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="">Codigo de producto</label>
+        <input type="text" name="codigoProducto" class="form-control">
+    </div>
+    <div class="form-group ">
+        <label class=" ">Nombre</label>
+        <input type="text" name="nombreProducto" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label class=" ">precio de venta</label>
+        <input type="number" name="precioVenta" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label class=" ">Costo</label>
+        <input type="number" name="precioCompra" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label class=" ">Cantidad</label>
+        <input type="number" name="cantidad" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label class=" ">habilitado</label><br>
+        <select name="habilitado" class="browser-default custom-select">
+                                <option selected>Elige</option>
+                                <option class="font-drop upper font-color-drop-little" value="1">habilitado</option>
+                                <option class="font-drop upper font-color-drop-little" value="2">deshabilitado</option>
+                            </select>
+    </div>
+    <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+</form>

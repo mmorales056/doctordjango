@@ -32,6 +32,8 @@ function crearEmpleadoMovil(ruta) {
 }
 
 
+
+
 function editarProducto(ruta) {
     $.ajax({
         url: ruta,
@@ -51,7 +53,7 @@ function verProducto(ruta) {
         dataType: "json",
         success: function(respuesta) {
             var salida = "";
-            salida = "<table class='table'>";
+            salida = "<table class='table table-dark'>";
             $.each(respuesta, function(indice, valor) {
                 salida += " <tr> <td> " + indice + "</td><td>" + valor + "</td></tr>"
             });
@@ -60,6 +62,18 @@ function verProducto(ruta) {
         },
         error: function() {
             console.log("no se pueden encontrar los datos");
+        }
+    });
+}
+
+function crearProductoMovil(ruta) {
+    $.ajax({
+        url: ruta,
+        success: function(respuesta) {
+            document.getElementById('editarProducto').innerHTML = respuesta;
+        },
+        error: function() {
+            console.log('Error al traer los datos');
         }
     });
 }

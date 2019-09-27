@@ -133,3 +133,17 @@ def guardarProducto(request):
         return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=('GuardadoCorrectamente',)))
     except Exception as e:
         return HttpResponse(e)
+    
+def verProducto(request,id):
+    try:
+        p= Productos.objects.get(pk=id)
+        diccionario = model_to_dict(p)
+        return JsonResponse(diccionario)
+    except Exception as e:
+        return HttpResponse(e)
+    
+def crearProductoMovil(request):
+    try:
+        return render(request,'doctorshots/crear-producto-movil.html')
+    except Exception as e:
+        return HttpResponse(e)
