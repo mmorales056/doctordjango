@@ -1,0 +1,35 @@
+<form action="{% url 'doctorshots:actualizarproducto'%}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="hidden" name="id" class="form-control" value="{{producto.id}}" readonly>
+
+        <label class="">Codigo de producto</label>
+        <input type="text" name="codigoProducto" class="form-control" value="{{producto.codigoProducto}}" readonly> </div>
+
+    <div class="form-group ">
+        <label class=" ">Nombre</label>
+        <input type="text" name="nombreProducto" class="form-control" value="{{producto.nombreProducto}}" required readonly>
+    </div>
+
+    <div class="form-group">
+        <label class=" ">Precio de Compra</label>
+        <input type="number" name="precioCompra" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+    </div>
+    <div class="form-group">
+        <label class=" ">Precio de Venta</label>
+        <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+    </div>
+
+    <div class="form-group">
+        <label class=" ">Cantidad</label>
+        <input type="number" name="cantidad" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label class=" ">habilitado</label><br>
+        <select name="habilitado" class="browser-default custom-select">
+                                <option class="font-drop upper font-color-drop-little" value="1" {% if producto.habilitado == 1 %} selected = "selected" {%endif%}>si</option>
+                                <option class="font-drop upper font-color-drop-little" value="2" {% if producto.habilitado == 2 %} selected = "selected" {%endif%}>no</option>
+                            </select>
+    </div>
+    <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+</form>

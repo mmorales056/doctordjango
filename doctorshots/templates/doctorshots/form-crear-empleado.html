@@ -9,9 +9,14 @@
             <div class="d-none d-sm-none d-md-block">
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
-                        {% if '1062' in mensaje %}
+                        {% if '1062' in mensaje and 'cedula' in mensaje%}
                         <div class="alert alert-danger" role="alert">
                             Ya existe un empleado con esta cedula
+                        </div>
+
+                        {% elif  '1062' and 'usuario' in mensaje %}
+                             <div class="alert alert-danger" role="alert">
+                            este nombre de usuario ya existe
                         </div>
                         {% elif '1265' in mensaje %}
                         <div class="alert alert-danger" role="alert">

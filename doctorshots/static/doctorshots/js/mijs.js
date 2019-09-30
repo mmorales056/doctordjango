@@ -32,7 +32,18 @@ function crearEmpleadoMovil(ruta) {
 }
 
 
-
+/* MODULO PRODUCTOS*/
+function crearProductoMovil(ruta) {
+    $.ajax({
+        url: ruta,
+        success: function(respuesta) {
+            document.getElementById('editarProducto').innerHTML = respuesta;
+        },
+        error: function() {
+            console.log('Error al traer los datos');
+        }
+    });
+}
 
 function editarProducto(ruta) {
     $.ajax({
@@ -66,14 +77,7 @@ function verProducto(ruta) {
     });
 }
 
-function crearProductoMovil(ruta) {
-    $.ajax({
-        url: ruta,
-        success: function(respuesta) {
-            document.getElementById('editarProducto').innerHTML = respuesta;
-        },
-        error: function() {
-            console.log('Error al traer los datos');
-        }
-    });
+//Este metodo me da formato de punto de mil a los campos que lo requieren
+function format(input) {
+    input.innerHTML = new Intl.NumberFormat().format(input);
 }

@@ -4,7 +4,7 @@ from django.db import models
 class Usuarios(models.Model):
     cedula = models.CharField(max_length=20, unique=True)
     nombres= models.CharField(max_length=50, default='')
-    usuario = models.CharField(max_length=45)
+    usuario = models.CharField(max_length=45, unique=True)
     clave = models.CharField(max_length=50)
     ROLES=(
         ('1','empleado'),

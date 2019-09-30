@@ -21,14 +21,15 @@
                                     <label class="campos labelForm">Nombre</label>
                                     <input type="text" name="nombreProducto" class="form-control" required>
                                 </div>
+                                 <div class="form-group">
+                                    <label class="campos labelForm">Precio de Compra</label>
+                                    <input type="number" name="precioCompra" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+                                </div>
                                 <div class="form-group">
                                     <label class="campos labelForm">precio de venta</label>
-                                    <input type="number" name="precioVenta" class="form-control" required>
+                                    <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
                                 </div>
-                                <div class="form-group">
-                                    <label class="campos labelForm">Costo</label>
-                                    <input type="number" name="precioCompra" class="form-control" required>
-                                </div>
+                               
                                 <div class="form-group">
                                     <label class="campos labelForm">Cantidad</label>
                                     <input type="number" name="cantidad" class="form-control" required>
@@ -68,7 +69,7 @@
                                         <td>
                                             <a class="btn btn-info font-drop"  data-toggle="modal" data-target="#modalProducto" onclick="verProducto('{% url 'doctorshots:verproducto' producto.id %}')" >Ver</a>
 
-                                            <a class="btn btn-warning font-drop"  >Editar</a>
+                                            <a class="btn btn-warning font-drop" data-toggle="modal" data-target="#modalProducto"onclick="editarProducto('{% url 'doctorshots:formeditarproducto' producto.id %}')" >Editar</a>
                                             <a class="btn btn-danger font-drop" href="#">Delete</a>
                                         </td>
                                     </tr>

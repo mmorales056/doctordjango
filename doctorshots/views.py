@@ -28,7 +28,8 @@ def login(request):
             return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=('password invalid',)))
                                                 
     except Exception as e:
-        return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=(e,)))
+        #return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=(e,)))
+        return HttpResponse(e)
 #Este metodo se encarga de cerrar la session
 def logout(request):
     try:
@@ -56,16 +57,19 @@ def formularioEmpleados(request, mensaje):
 # Este metodo Guarda un empleado
 def guardarEmpleado(request):
    try:
-       empleado = Usuarios(
-            cedula = request.POST['cedula'],
-            nombres= request.POST['nombres'],
-            usuario = request.POST['usuario'],
-            clave = request.POST['clave'],
-            Rol = request.POST['Rol']
-        )
-              
-       empleado.save()
-       return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=('GuardadoCorrectamente',)))
+       ses = request.session.get('logueado',False)
+       if ses and ses[3]=='2':
+           empleado = Usuarios(
+               cedula = request.POST['cedula'],
+               nombres= request.POST['nombres'],
+               usuario = request.POST['usuario'],
+               clave = request.POST['clave'],
+               Rol = request.POST['Rol']
+            )
+           empleado.save()
+           return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=('GuardadoCorrectamente',)))
+       else:           
+           return render(request,'doctorshots/index.html',{'s':'fallo'})
    
    except Exception as e:
        return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=(e,)))
@@ -106,7 +110,6 @@ def eliminarEmpleado(request,id):
     except Exception as e:
         return HttpResponse(e)
 
-
 '''PRODUCTOS INVENTARIO'''
 #Metodo que despliega el formulario Productos en la pantalla
 def formularioProductos(request,mensaje):
@@ -145,5 +148,32 @@ def verProducto(request,id):
 def crearProductoMovil(request):
     try:
         return render(request,'doctorshots/crear-producto-movil.html')
+    except Exception as e:
+        return HttpResponse(e)
+
+def formularioEditarProducto(request,id):
+    try:
+        ses = request.session.get('logueado',False)
+        if ses and ses[3]=='2':
+            p = Productos.objects.get(pk=id)
+            return render(request,'doctorshots/form-editar-producto.html',{'producto':p})
+        else:
+            return render(request,'doctorshots/index.html',{'s':'fallo'})
+            
+    except Exception as e:        
+        return HttpResponse(e)
+
+def actualiarProducto(request):
+    try:
+        id = request.POST['id']
+        p = Productos.objects.get(pk=id)
+        p.codigoProducto= request.POST['codigoProducto']
+        p.nombreProducto = request.POST['nombreProducto']
+        p.precioCompra = request.POST['precioCompra']
+        p.precioVenta= request.POST['precioVenta']
+        p.cantidad = request.POST['cantidad']
+        p.habilitado = request.POST['habilitado']
+        p.save()
+        return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('Actualizado correctamente',)))
     except Exception as e:
         return HttpResponse(e)

@@ -20,5 +20,7 @@ urlpatterns = [
     path('formproductos/<str:mensaje>', views.formularioProductos, name='formproductos'),
     path('guardarproducto', views.guardarProducto, name='guardarproducto'),
     path('verproducto/<int:id>', views.verProducto, name='verproducto'),
-    path('crearproductomovil', views.crearProductoMovil, name='crearproductomovil')
+    path('crearproductomovil', views.crearProductoMovil, name='crearproductomovil'),
+    path('formeditarproducto/<int:id>', views.formularioEditarProducto, name='formeditarproducto'),
+    path('actualizarproducto', views.actualiarProducto , name='actualizarproducto')
 ]
