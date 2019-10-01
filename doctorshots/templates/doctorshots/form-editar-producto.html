@@ -17,19 +17,33 @@
     </div>
     <div class="form-group">
         <label class=" ">Precio de Venta</label>
-        <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+        <input type="number" name="precioVenta" class="form-control" id="monedaInput" onkeyup="format(this)" required>
     </div>
 
-    <div class="form-group">
+    <div class=" form-group ">
         <label class=" ">Cantidad</label>
-        <input type="number" name="cantidad" class="form-control" required>
+        <input type="number " name="cantidad" class="form-control " required>
     </div>
-    <div class="form-group">
+    <div class="form-group ">
         <label class=" ">habilitado</label><br>
-        <select name="habilitado" class="browser-default custom-select">
-                                <option class="font-drop upper font-color-drop-little" value="1" {% if producto.habilitado == 1 %} selected = "selected" {%endif%}>si</option>
-                                <option class="font-drop upper font-color-drop-little" value="2" {% if producto.habilitado == 2 %} selected = "selected" {%endif%}>no</option>
+        <select name="habilitado" class="browser-default custom-select ">
+                                <option class="font-drop upper font-color-drop-little " value="1" {% if producto.habilitado == 1 %} selected = "selected " {%endif%}>si</option>
+                                <option class="font-drop upper font-color-drop-little " value="2" {% if producto.habilitado == 2 %} selected = "selected " {%endif%}>no</option>
                             </select>
     </div>
-    <input type="submit" name="accion" value="Agregar" class="btn btn-info">
+    <div class="row">
+        <div class="col-6">
+            <input type="submit" name="accion" value="Actualizar" class="btn btn-info">
+        </div>
+
+        <div class="d-block d-sm-block d-md-none">
+            <div class="col-6">
+                <a class="btn btn-danger font-drop" href="{% url 'doctorshots:eliminarproducto' producto.id %}">Delete</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
 </form>

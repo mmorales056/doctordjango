@@ -177,3 +177,11 @@ def actualiarProducto(request):
         return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('Actualizado correctamente',)))
     except Exception as e:
         return HttpResponse(e)
+
+def eliminarProducto(request,id):
+    try:
+        p = Productos.objects.get(pk=id)
+        p.delete()
+        return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('ELiminado con exito',)))
+    except Exception as e:
+        return HttpResponseRedirect(e)
