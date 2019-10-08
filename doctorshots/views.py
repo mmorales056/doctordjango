@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.forms.models import model_to_dict
-from doctorshots.models import Usuarios,Productos
+from doctorshots.models import Usuarios,Productos, CategoriaProducto
 
 # Create your views here.
 '''inicio'''
@@ -64,7 +64,7 @@ def guardarEmpleado(request):
                nombres= request.POST['nombres'],
                usuario = request.POST['usuario'],
                clave = request.POST['clave'],
-               Rol = request.POST['Rol']
+               Rol = '1'
             )
            empleado.save()
            return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=('GuardadoCorrectamente',)))
@@ -116,27 +116,47 @@ def formularioProductos(request,mensaje):
     try:
         ses = request.session.get('logueado',False)
         if ses and ses[3]=='2':
+            #CApturamos todas las categorias 
+            c = CategoriaProducto.objects.all()
+            print(c)
+            #Capturamos todos los prpdutos
             p = Productos.objects.all()
-            contexto= {'productos': p, 'mensaje': mensaje}
+            
+            contexto= {'productos': p, 'categorias':c, 'mensaje': mensaje}
             return render(request,'doctorshots/form-crear-producto.html',contexto)
     except Exception as e:
         return HttpResponse(e)
-    
+#MEtodo que me guarda un producto
 def guardarProducto(request):
     try:
+        c = request.POST['categoria']
+        h= request.POST['habilitado']
+        if h == 'on':
+            h= True
+        else:
+            h= False
+        print(h)
+        
+        
         producto = Productos(
             codigoProducto = request.POST['codigoProducto'],
             nombreProducto= request.POST['nombreProducto'],
+            categoria= CategoriaProducto.objects.get(pk=c),
+            presentacionProducto = request.POST['presentacionProducto'],
+            nacionalidad= request.POST['nacionalidad'],
             precioVenta = request.POST['precioVenta'],
             precioCompra = request.POST['precioCompra'],
-            habilitado = request.POST['habilitado'],
-            cantidad = request.POST['cantidad']
+            cantidad = request.POST['cantidad'],
+            habilitado = h
+
         )
         producto.save()
         return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=('GuardadoCorrectamente',)))
     except Exception as e:
+        print(e)
         return HttpResponse(e)
-    
+        #return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=(e,)))
+#Metodo que me lista los productos    
 def verProducto(request,id):
     try:
         p= Productos.objects.get(pk=id)
@@ -144,27 +164,36 @@ def verProducto(request,id):
         return JsonResponse(diccionario)
     except Exception as e:
         return HttpResponse(e)
-    
+#MEtodo que me crea un producto    
 def crearProductoMovil(request):
     try:
         return render(request,'doctorshots/crear-producto-movil.html')
     except Exception as e:
         return HttpResponse(e)
-
+#MEtodo que me carga el formulario editar producto
 def formularioEditarProducto(request,id):
     try:
         ses = request.session.get('logueado',False)
-        if ses and ses[3]=='2':
+        if ses and ses[3]=='2':           
             p = Productos.objects.get(pk=id)
-            return render(request,'doctorshots/form-editar-producto.html',{'producto':p})
+            print(p.categoria)
+            c = CategoriaProducto.objects.get(descripcion=p.categoria)
+            print(c)
+            return render(request,'doctorshots/form-editar-producto.html',{'producto':p, 'categoria': c})
         else:
             return render(request,'doctorshots/index.html',{'s':'fallo'})
             
     except Exception as e:        
         return HttpResponse(e)
-
-def actualiarProducto(request):
+#Metodo que toma los datos del formulario editar y los actualiza
+def actualizarProducto(request):
     try:
+        h= request.POST['habilitado']
+        if h == 'on':
+            h= True
+        else:
+            h= False
+            
         id = request.POST['id']
         p = Productos.objects.get(pk=id)
         p.codigoProducto= request.POST['codigoProducto']
@@ -172,12 +201,12 @@ def actualiarProducto(request):
         p.precioCompra = request.POST['precioCompra']
         p.precioVenta= request.POST['precioVenta']
         p.cantidad = request.POST['cantidad']
-        p.habilitado = request.POST['habilitado']
+        p.habilitado = h
         p.save()
         return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('Actualizado correctamente',)))
     except Exception as e:
         return HttpResponse(e)
-
+#MEtodo que elimina el producto
 def eliminarProducto(request,id):
     try:
         p = Productos.objects.get(pk=id)

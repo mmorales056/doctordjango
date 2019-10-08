@@ -1,49 +1,89 @@
 <form action="{% url 'doctorshots:actualizarproducto'%}" method="POST">
     {% csrf_token %}
-    <div class="form-group">
-        <input type="hidden" name="id" class="form-control" value="{{producto.id}}" readonly>
+    <input type="hidden" name="id" class="form-control" value="{{producto.id}}" required readonly>
 
-        <label class="">Codigo de producto</label>
-        <input type="text" name="codigoProducto" class="form-control" value="{{producto.codigoProducto}}" readonly> </div>
-
-    <div class="form-group ">
-        <label class=" ">Nombre</label>
-        <input type="text" name="nombreProducto" class="form-control" value="{{producto.nombreProducto}}" required readonly>
-    </div>
-
-    <div class="form-group">
-        <label class=" ">Precio de Compra</label>
-        <input type="number" name="precioCompra" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
-    </div>
-    <div class="form-group">
-        <label class=" ">Precio de Venta</label>
-        <input type="number" name="precioVenta" class="form-control" id="monedaInput" onkeyup="format(this)" required>
-    </div>
-
-    <div class=" form-group ">
-        <label class=" ">Cantidad</label>
-        <input type="number " name="cantidad" class="form-control " required>
-    </div>
-    <div class="form-group ">
-        <label class=" ">habilitado</label><br>
-        <select name="habilitado" class="browser-default custom-select ">
-                                <option class="font-drop upper font-color-drop-little " value="1" {% if producto.habilitado == 1 %} selected = "selected " {%endif%}>si</option>
-                                <option class="font-drop upper font-color-drop-little " value="2" {% if producto.habilitado == 2 %} selected = "selected " {%endif%}>no</option>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text">Categoria</label>
+        </div>
+        <select name="categoria" class="browser-default custom-select">      
+                                        <option class="font-drop upper font-color-drop-little" value="{{producto.categoria}}"> {{categoria.descripcion}}</option>                                                                   
                             </select>
     </div>
-    <div class="row">
-        <div class="col-6">
-            <input type="submit" name="accion" value="Actualizar" class="btn btn-info">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Codigo</span>
         </div>
-
-        <div class="d-block d-sm-block d-md-none">
-            <div class="col-6">
-                <a class="btn btn-danger font-drop" href="{% url 'doctorshots:eliminarproducto' producto.id %}">Delete</a>
-            </div>
-        </div>
-
+        <input type="text" name="codigoProducto" class="form-control" value="{{producto.codigoProducto}}" required readonly>
     </div>
 
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+        </div>
+        <input type="text" name="nombreProducto" class="form-control" value="{{producto.nombreProducto}}" readonly>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Presentación</label>
+        </div>
+        <select name="presentacionProducto" class="browser-default custom-select">
+                                        <option> Seleccione Una</option>
+                                        <option class="font-drop upper font-color-drop-little" value="1"{% if producto.presentacionProducto == '1' %} selected= "selected" {%endif%} >330ml</option>
+                                        
+                                        <option class="font-drop upper font-color-drop-little" value="2" {% if producto.presentacionProducto == '2' %} selected= "selected" {%endif%}>375ml</option>
 
+                                        <option class="font-drop upper font-color-drop-little" value="3" {% if producto.presentacionProducto == '3' %} selected= "selected" {%endif%} >750ml</option>
 
+                                        <option class="font-drop upper font-color-drop-little" value="4" {% if producto.presentacionProducto == '4' %} selected= "selected" {%endif%}>1000ml</option>
+                                        <option class="font-drop upper font-color-drop-little" value="5" {% if producto.presentacionProducto == '5' %} selected= "selected" {%endif%} >2000ml</option>     
+                            </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Nacionalidad</span>
+        </div>
+        <input type="text" name="nacionalidad" class="form-control" value="{{producto.nacionalidad}}" required>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Compra</span>
+        </div>
+        <input type="number" name="precioCompra" id="precioVenta" class="form-control" onchange="notNegative(this)" required>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Venta</span>
+        </div>
+        <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
+        </div>
+        <input type="number" name="cantidad" class="form-control" required>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" aria-label="Checkbox for following text input" name="habilitado">
+            </div>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with checkbox" value="habilitar" readonly>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <input type="submit" name="accion" value="Actualizar" class="btn btn-info">
+            </div>
+            <div class="d-block d-sm-block d-md-none">
+                <div class="col-6">
+                    <a class="btn btn-danger font-drop" href="{% url 'doctorshots:eliminarproducto' producto.id %}">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

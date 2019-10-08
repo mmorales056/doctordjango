@@ -1,47 +1,96 @@
-{% extends "doctorshots/base.html" %} 
-{% load staticfiles%} 
-{% block titulo %} Inventario {% endblock %} 
-{% block body %}<body class="body-inventario">{% endblock %} 
-{% block header %}<header class="header-inventario"> {% endblock %}
- {% block contenedor %}
+{% extends "doctorshots/base.html" %} {% load staticfiles%} {% block titulo %} Inventario {% endblock %} {% block body %}
+
+<body class="body-inventario">{% endblock %} {% block header %}
+    <header class="header-inventario"> {% endblock %} {% block contenedor %}
         <div class="container-fluid mt-4">
             <!--Escritorio-->
             <div class="d-none d-sm-none d-md-block">
                 <div class="row">
                     <!--FORMULARIO-->
                     <div class="col-md-5 col-lg-3 col-xl-3 ">
+
                         <div class="card-body ">
+                            {% if '1062' and 'codigoProducto' in mensaje %}
+                            <div class="alert alert-danger" role="alert">
+                                ya existe un producto con este código
+                            </div>
+                            {% endif %}
                             <form action="{% url 'doctorshots:guardarproducto'%}" method="POST">
                                 {% csrf_token %}
-                                <div class="form-group">
-                                    <label class="labelForm">Codigo de producto</label>
-                                    <input type="text" name="codigoProducto" class="form-control">
-                                </div>
-                                <div class="form-group ">
-                                    <label class="campos labelForm">Nombre</label>
-                                    <input type="text" name="nombreProducto" class="form-control" required>
-                                </div>
-                                 <div class="form-group">
-                                    <label class="campos labelForm">Precio de Compra</label>
-                                    <input type="number" name="precioCompra" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="campos labelForm">precio de venta</label>
-                                    <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
-                                </div>
-                               
-                                <div class="form-group">
-                                    <label class="campos labelForm">Cantidad</label>
-                                    <input type="number" name="cantidad" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="campos labelForm">habilitado</label><br>
-                                    <select name="habilitado" class="browser-default custom-select">
-                                <option selected>Elige</option>
-                                <option class="font-drop upper font-color-drop-little" value="1">habilitado</option>
-                                <option class="font-drop upper font-color-drop-little" value="2">deshabilitado</option>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
+                                    </div>
+                                    <select name="categoria" class="browser-default custom-select">
+                                            <option class="font-drop upper font-color-drop-little" >Seleccione una</option>
+                                    {% for cat in categorias %}
+                                        <option class="font-drop upper font-color-drop-little" value="{{cat.tipo}}">{{cat.descripcion}}</option>
+                                    {% endfor %}
+                                
                             </select>
                                 </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Codigo</span>
+                                    </div>
+                                    <input type="text" name="codigoProducto" class="form-control" required>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                                    </div>
+                                    <input type="text" name="nombreProducto" class="form-control" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Presentación</label>
+                                    </div>
+                                    <select name="presentacionProducto" class="browser-default custom-select">
+                                        <option> Seleccione Una</option>
+                                        <option class="font-drop upper font-color-drop-little" value="1">330ml</option>
+                                        <option class="font-drop upper font-color-drop-little" value="2">375ml</option>
+                                        <option class="font-drop upper font-color-drop-little" value="3">750ml</option>
+                                        <option class="font-drop upper font-color-drop-little" value="4">1000ml</option>
+                                        <option class="font-drop upper font-color-drop-little" value="5">2000ml</option>                                                                   
+                            </select>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Nacionalidad</span>
+                                    </div>
+                                    <input type="text" name="nacionalidad" class="form-control" required>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Compra</span>
+                                    </div>
+                                    <input type="number" name="precioCompra" id="precioVenta" class="form-control" onchange="notNegative(this)" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Venta</span>
+                                    </div>
+                                    <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+                                </div>
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
+                                    </div>
+                                    <input type="number" name="cantidad" class="form-control" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="habilitado">
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Text input with checkbox" value="habilitar" readonly>
+                                </div>
+
                                 <input type="submit" name="accion" value="Agregar" class="btn btn-info">
                             </form>
                         </div>
@@ -54,8 +103,61 @@
                                     <tr>
                                         <th class="font-drop upper font-color-drop">Codigo</th>
                                         <th class="font-drop upper font-color-drop">Nombre</th>
+                                        <th class="font-drop upper font-color-drop">Categoria</th>
                                         <th class="font-drop upper font-color-drop">Precio</th>
                                         <th class="font-drop upper font-color-drop">Cantidad</th>
+                                        <th class="font-drop upper font-color-drop">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for producto in productos %}
+                                    <tr>
+                                        <td class="font-pacman">{{producto.codigoProducto}}</td>
+                                        <td class="font-pacman">{{producto.nombreProducto}}</td>
+                                        <td class="font-pacman">{{producto.categoria}}</td>
+                                        <td class="font-pacman">{{producto.precioVenta}}</td>
+                                        <td class="font-pacman">{{producto.cantidad}}</td>
+                                        <td>
+                                            <a class="btn btn-info font-drop" data-toggle="modal" data-target="#modalProducto" onclick="verProducto('{% url 'doctorshots:verproducto' producto.id %}')">Ver</a>
+
+                                            <a class="btn btn-warning font-drop" data-toggle="modal" data-target="#modalProducto" onclick="editarProducto('{% url 'doctorshots:formeditarproducto' producto.id %}')">Editar</a>
+                                            <a class="btn btn-danger font-drop" href="{% url 'doctorshots:eliminarproducto' producto.id%}">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                            {% if 'Actualizado' in mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                Producto Actualizado con exito
+                            </div>
+                            {% elif 'ELiminado' in mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                Producto Eliminado con exito
+                            </div>
+                            {% elif 'Correctamente' in mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                Producto Guardado Con exito
+                            </div>
+                            {% endif%}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--Movil-->
+            <div class="d-block d-sm-block d-md-none">
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="card-body">
+                            <table class="table table-dark opacity">
+                                <thead>
+                                    <tr>
+                                        <th class="font-drop upper font-color-drop">Codigo</th>
+                                        <th class="font-drop upper font-color-drop">Nombre</th>
+                                        <th class="font-drop upper font-color-drop">Precio</th>
                                         <th class="font-drop upper font-color-drop">Acciones</th>
                                     </tr>
                                 </thead>
@@ -67,53 +169,33 @@
                                         <td class="font-pacman">{{producto.precioVenta}}</td>
                                         <td class="font-pacman">{{producto.cantidad}}</td>
                                         <td>
-                                            <a class="btn btn-info font-drop"  data-toggle="modal" data-target="#modalProducto" onclick="verProducto('{% url 'doctorshots:verproducto' producto.id %}')" >Ver</a>
-
-                                            <a class="btn btn-warning font-drop" data-toggle="modal" data-target="#modalProducto"onclick="editarProducto('{% url 'doctorshots:formeditarproducto' producto.id %}')" >Editar</a>
-                                            <a class="btn btn-danger font-drop" href="#">Delete</a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-
-                                </tbody>
-                            </table>                            
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!--Movil-->
-            <div class="d-block d-sm-block d-md-none">
-                <div class="row">
-                    <div class="col-12 col-sm-12">
-                         <div class="card-body">
-                            <table class="table table-dark opacity">
-                                <thead>
-                                    <tr>
-                                        <th class="font-drop upper font-color-drop">Codigo</th>
-                                        <th class="font-drop upper font-color-drop">Nombre</th>
-                                        <th class="font-drop upper font-color-drop">Precio</th>         
-                                        <th class="font-drop upper font-color-drop">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for producto in productos %}
-                                    <tr>
-                                        <td class="font-pacman">{{producto.codigoProducto}}</td>
-                                        <td class="font-pacman">{{producto.nombreProducto}}</td>
-                                        <td class="font-pacman">{{producto.precioVenta}}</td>
-                                        <td class="font-pacman">{{producto.cantidad}}</td>
-                                        <td>                                    
                                             <a class="btn btn-info font-drop " data-toggle="modal" data-target="#modalProducto" onclick="editarProducto('{% url 'doctorshots:formeditarproducto' producto.id %}')">Editar</a>
-                                                    
+
                                         </td>
                                     </tr>
                                     {% endfor %}
 
                                 </tbody>
                             </table>
-                            <a class="btn btn-info font-drop" data-toggle="modal" data-target="#modalProducto" onclick="crearProductoMovil('{% url 'doctorshots:crearproductomovil'%} ') ">Crear Empleado</a>
+                            {% if '1062' and 'codigoProducto' in mensaje %}
+                            <div class="alert alert-danger" role="alert">
+                                ya existe un producto con este código
+                            </div>
+                            {% elif 'Actualizado' in mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                Producto Actualizado con exito
+                            </div>
+                            {% elif 'ELiminado' in mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                Producto Eliminado con exito
+                            </div>
+                            {% elif 'Correctamente' in mensaje %}
+                            <div class="alert alert-success" role="alert">
+                                Producto Guardado Con exito
+                            </div>
+
+                            {% endif %}
+                            <a class="btn btn-info font-drop" data-toggle="modal" data-target="#modalProducto" onclick="crearProductoMovil('{% url 'doctorshots:crearproductomovil'%} ') ">Crear Producto</a>
                         </div>
                     </div>
 
@@ -125,25 +207,25 @@
 
         </div>
 
-         <!--Modal Producto-->
-                <div class="modal fade" id="modalProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <!--Modal Producto-->
+        <div class="modal fade" id="modalProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-                            </div>
-                            <div class="modal-body" id="editarProducto">
+                    </div>
+                    <div class="modal-body" id="editarProducto">
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
+            </div>
+        </div>
 
 
-{% endblock %}
+        {% endblock %}
