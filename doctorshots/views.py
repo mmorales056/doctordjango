@@ -130,14 +130,9 @@ def formularioProductos(request,mensaje):
 def guardarProducto(request):
     try:
         c = request.POST['categoria']
-        h= request.POST['habilitado']
-        if h == 'on':
-            h= True
-        else:
-            h= False
-        print(h)
-        
-        
+        h = request.POST.get('habilitado', 'off') == 'on'
+
+        print(h)                                     
         producto = Productos(
             codigoProducto = request.POST['codigoProducto'],
             nombreProducto= request.POST['nombreProducto'],
@@ -153,9 +148,8 @@ def guardarProducto(request):
         producto.save()
         return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=('GuardadoCorrectamente',)))
     except Exception as e:
-        print(e)
-        return HttpResponse(e)
-        #return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=(e,)))
+        
+        return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=(e,)))
 #Metodo que me lista los productos    
 def verProducto(request,id):
     try:

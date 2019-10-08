@@ -1,36 +1,36 @@
 <form action="{% url 'doctorshots:guardarproducto'%}" method="POST">
-                                {% csrf_token %}
+    {% csrf_token %}
 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
-                                    </div>
-                                    <select name="categoria" class="browser-default custom-select">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
+        </div>
+        <select name="categoria" class="browser-default custom-select">
                                             <option class="font-drop upper font-color-drop-little" >Seleccione una</option>
                                     {% for cat in categorias %}
                                         <option class="font-drop upper font-color-drop-little" value="{{cat.tipo}}">{{cat.descripcion}}</option>
                                     {% endfor %}
                                 
                             </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm">Codigo</span>
-                                    </div>
-                                    <input type="text" name="codigoProducto" class="form-control" required>
-                                </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Codigo</span>
+        </div>
+        <input type="text" name="codigoProducto" class="form-control" required>
+    </div>
 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
-                                    </div>
-                                    <input type="text" name="nombreProducto" class="form-control" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="inputGroupSelect01">Presentación</label>
-                                    </div>
-                                    <select name="presentacionProducto" class="browser-default custom-select">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+        </div>
+        <input type="text" name="nombreProducto" class="form-control" required>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Presentación</label>
+        </div>
+        <select name="presentacionProducto" class="browser-default custom-select">
                                         <option> Seleccione Una</option>
                                         <option class="font-drop upper font-color-drop-little" value="1">330ml</option>
                                         <option class="font-drop upper font-color-drop-little" value="2">375ml</option>
@@ -38,41 +38,42 @@
                                         <option class="font-drop upper font-color-drop-little" value="4">1000ml</option>
                                         <option class="font-drop upper font-color-drop-little" value="5">2000ml</option>                                                                   
                             </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Nacionalidad</span>
-                                    </div>
-                                    <input type="text" name="nacionalidad" class="form-control" required>
-                                </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Nacionalidad</span>
+        </div>
+        <input type="text" name="nacionalidad" class="form-control" required>
+    </div>
 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Compra</span>
-                                    </div>
-                                    <input type="number" name="precioCompra" id="precioVenta" class="form-control" onchange="notNegative(this)" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Venta</span>
-                                    </div>
-                                    <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
-                                </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Compra</span>
+        </div>
+        <input type="number" name="precioCompra" id="precioVenta" class="form-control" onchange="notNegative(this)" required>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Venta</span>
+        </div>
+        <input type="number" name="precioVenta" class="form-control" onkeyup="format(this)" onchange="format(this)" required>
+    </div>
 
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
-                                    </div>
-                                    <input type="number" name="cantidad" class="form-control" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" name="habilitado">
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control" aria-label="Text input with checkbox" value="habilitar" readonly>
-                                </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
+        </div>
+        <input type="number" name="cantidad" class="form-control" required>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="checkbox" aria-label="Checkbox for following text input" name="habilitado">
+            </div>
+        </div>
+        <input type="text" class="form-control" aria-label="Text input with checkbox" value="habilitar" readonly>
+    </div>
 
-                                <input type="submit" name="accion" value="Agregar" class="btn btn-info">
-                            </form>
+    <input type="submit" name="accion" value="Agregar" class="btn btn-info" onclick="this.disabled=true;
+this.value='Enviando...';  this.form.submit()">
+</form>
