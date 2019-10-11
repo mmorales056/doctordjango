@@ -89,3 +89,13 @@ function notNegative(num) {
         console.log("entro aca else");
     }
 }
+
+//CArgar modal de nueva categoria con su formulario
+function cargarModal() {
+    let select = document.getElementById("categorias");
+    if (select.value === 'nueva') {
+        $('#modalCategoria').modal({
+            show: true,
+        });
+    }
+}

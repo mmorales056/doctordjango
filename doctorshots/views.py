@@ -28,8 +28,8 @@ def login(request):
             return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=('password invalid',)))
                                                 
     except Exception as e:
-        #return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=(e,)))
-        return HttpResponse(e)
+        return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=(e,)))
+        #return HttpResponse(e)
 #Este metodo se encarga de cerrar la session
 def logout(request):
     try:
@@ -208,3 +208,14 @@ def eliminarProducto(request,id):
         return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('ELiminado con exito',)))
     except Exception as e:
         return HttpResponseRedirect(e)
+
+def crearCategoria(request):
+    try:
+        categoria = CategoriaProducto(
+            descripcion = request.POST['nombreCategoria']
+        )
+        categoria.save()
+        return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=('CategoriaGuardada',)))
+
+    except Exception as e:
+        return HttpResponse(e)

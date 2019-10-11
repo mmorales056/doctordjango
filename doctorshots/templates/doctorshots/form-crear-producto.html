@@ -22,11 +22,12 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
                                     </div>
-                                    <select name="categoria" class="browser-default custom-select">
+                                    <select name="categoria" id="categorias" class="browser-default custom-select" onchange="cargarModal()">
                                             <option class="font-drop upper font-color-drop-little" >Seleccione una</option>
                                     {% for cat in categorias %}
-                                        <option class="font-drop upper font-color-drop-little" value="{{cat.tipo}}">{{cat.descripcion}}</option>
+                                        <option class="font-drop upper font-color-drop-little" value="{{cat.id}}">{{cat.descripcion}}</option>
                                     {% endfor %}
+                                        <option value="nueva" id="nuevaCategoria"> Crear Categoria</option>
                                 
                             </select>
                                 </div>
@@ -82,10 +83,10 @@
                                     </div>
                                     <input type="number" name="cantidad" class="form-control" required>
                                 </div>
-                                <div class="input-group mb-3">
+                                <div class="input-group mb-3" hidden>
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            <input type="checkbox" aria-label="Checkbox for following text input" name="habilitado">
+                                            <input type="checkbox" aria-label="Checkbox for following text input" name="habilitado" checked>
                                         </div>
                                     </div>
                                     <input type="text" class="form-control" aria-label="Text input with checkbox" value="Habilitar" readonly>
@@ -104,6 +105,7 @@
                                         <th class="font-drop upper font-color-drop">Codigo</th>
                                         <th class="font-drop upper font-color-drop">Nombre</th>
                                         <th class="font-drop upper font-color-drop">Categoria</th>
+                                        <td class="font-pacman upper font-color-drop">Presentación</td>
                                         <th class="font-drop upper font-color-drop">Precio</th>
                                         <th class="font-drop upper font-color-drop">Cantidad</th>
                                         <th class="font-drop upper font-color-drop">Acciones</th>
@@ -115,6 +117,7 @@
                                         <td class="font-pacman">{{producto.codigoProducto}}</td>
                                         <td class="font-pacman">{{producto.nombreProducto}}</td>
                                         <td class="font-pacman">{{producto.categoria}}</td>
+                                        <td class="font-pacman">{{producto.get_presentacionProducto_display}}</td>
                                         <td class="font-pacman">{{producto.precioVenta}}</td>
                                         <td class="font-pacman">{{producto.cantidad}}</td>
                                         <td>
@@ -226,6 +229,34 @@
                 </div>
             </div>
         </div>
+        <!--Modal de crear Categorias-->
+        <div class="modal fade" id="modalCategoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'doctorshots:agregarcategoria'%}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                                </div>
+                                <input type="text" name="nombreCategoria" class="form-control">
+                            </div>
+                            <input type="submit" name="accion" value="Crear" class="btn btn-info">
+                        </form>
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% endblock %}

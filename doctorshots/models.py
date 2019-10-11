@@ -18,18 +18,6 @@ class Usuarios(models.Model):
         return self.usuario
 
 class CategoriaProducto(models.Model):
-    categorias=(
-        ('1','Cervezas'),
-        ('2','Wisckeys'),
-        ('3','Rones'),
-        ('4','Tequilas'),
-        ('5','Vodcas'),
-        ('6','vinos'),
-        ('7','Shots') ,
-        ('8','Aguardientes'),
-        ('9','Gaseosas')
-    )    
-    tipo = models.CharField(max_length=1,choices=categorias)
     descripcion= models.CharField(max_length=45,default='')
     def __str__(self):
         return self.descripcion
@@ -40,10 +28,10 @@ class Productos(models.Model):
     categoria = models.ForeignKey(CategoriaProducto, on_delete= models.DO_NOTHING)
     tipos= (
         ('1','330 ml'),
-        ('2','375ml'),
+        ('2','375 ml'),
         ('3','750 ml'),
-        ('4','1000ml'),
-        ('5','2000')                
+        ('4','1000 ml'),
+        ('5','2000 ml')                
     )
     presentacionProducto = models.CharField(max_length=1,choices=tipos,default='')
     nacionalidad = models.CharField(max_length=45)

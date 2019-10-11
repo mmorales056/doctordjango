@@ -23,5 +23,6 @@ urlpatterns = [
     path('crearproductomovil', views.crearProductoMovil, name='crearproductomovil'),
     path('formeditarproducto/<int:id>', views.formularioEditarProducto, name='formeditarproducto'),
     path('actualizarproducto', views.actualizarProducto , name='actualizarproducto'),
-    path('eliminarproducto/<int:id>', views.eliminarProducto, name=('eliminarproducto'))
+    path('eliminarproducto/<int:id>', views.eliminarProducto, name=('eliminarproducto')),
+    path('crearcategoria', views.crearCategoria, name=('agregarcategoria'))
 ]
