@@ -44,4 +44,19 @@ class Productos(models.Model):
     def __str__(self):
         return self.nombreProducto
 
+class Mesas(models.Model):
+    numeroMesa= models.CharField(max_length=2)
+
+class Ventas(models.Model):
+    mesero = models.ForeignKey(Usuarios,on_delete=models.DO_NOTHING)
+    mesa = models.ForeignKey(Mesas, on_delete=models.DO_NOTHING)
+    total = models.FloatField()
+    estado = models.BooleanField(default=True)
+
+class DetalleVenta(models.Model):
+    venta = models.ForeignKey(Ventas, on_delete=models.DO_NOTHING)
+    producto =models.ForeignKey(Productos, on_delete=models.DO_NOTHING)
+    precio = models.FloatField()
+    cantidad = models.IntegerField()
+    
 

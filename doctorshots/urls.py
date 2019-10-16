@@ -24,5 +24,9 @@ urlpatterns = [
     path('formeditarproducto/<int:id>', views.formularioEditarProducto, name='formeditarproducto'),
     path('actualizarproducto', views.actualizarProducto , name='actualizarproducto'),
     path('eliminarproducto/<int:id>', views.eliminarProducto, name=('eliminarproducto')),
-    path('crearcategoria', views.crearCategoria, name=('agregarcategoria'))
+    path('crearcategoria', views.crearCategoria, name=('agregarcategoria')),
+    #MODULO VENTAS
+    path('ventas', views.formVentas, name=('formventas')),
+    path('nuevamesa', views.formNuevaMesa, name=('nuevaMesa')),
+    path('nuevaventa',views.nuevaVenta, name=('nuevaVenta'))
 ]

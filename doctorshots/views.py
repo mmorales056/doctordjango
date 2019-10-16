@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.forms.models import model_to_dict
-from doctorshots.models import Usuarios,Productos, CategoriaProducto
+from doctorshots.models import Usuarios,Productos, CategoriaProducto, Mesas
 
 # Create your views here.
 '''inicio'''
@@ -208,7 +208,7 @@ def eliminarProducto(request,id):
         return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('ELiminado con exito',)))
     except Exception as e:
         return HttpResponseRedirect(e)
-
+#Metodo que me crea una categoria nueva 
 def crearCategoria(request):
     try:
         categoria = CategoriaProducto(
@@ -219,3 +219,24 @@ def crearCategoria(request):
 
     except Exception as e:
         return HttpResponse(e)
+
+'''VENTAS'''
+#Este metodo me inicia el formulari de las ventas
+def formVentas(request):
+    try:
+        m =  Mesas.objects.all()
+        contexto = {'mesas':m }
+        return render(request,'doctorshots/ventas.html',contexto)                
+    except Exception as e:
+        return HttpResponse(e)
+
+#Este metodo me carga la vista a la modal de crear nueva mesa 
+def formNuevaMesa(request):
+    ses = request.session.get('logueado',False)
+    if ses and ses[3]=='2':        
+        return render(request,'doctorshots/nuevaMesa.html')
+
+def nuevaVenta(request):
+    c = CategoriaProducto.objects.all()
+    contexto = {'categorias': c}
+    return render(request,'doctorshots/nuevaVenta.html',contexto)

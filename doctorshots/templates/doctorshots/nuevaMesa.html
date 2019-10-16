@@ -1,0 +1,10 @@
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Numero Mesa</span>
+        </div>
+        <input type="text" name="numeroMesa" class="form-control">
+    </div>
+    <input type="submit" name="accion" value="Crear" class="btn btn-info">
+</form>

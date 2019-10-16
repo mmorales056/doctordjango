@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-4 col-sm-4 col-md-4">
+            <select name="categorias" id="" onchange="llenarProductos()">
+                        <option > Categorias </option>
+                        {% for categoria in categorias %}
+                            <option value="{{categoria.id}}">{{categoria.descripcion}}</option>
+                        {% endfor %}
+                    </select>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4">
+            <select name="" id="">
+                        <option > Producto </option>
+                    </select>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4">
+            <th><input type="number" placeholder="Cantidad"></th>
+        </div>
+    </div>
+
+    <table class="table">
+        <div class="row">
+            <tr>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <th class="labelForm">Mesero</th>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <th class="labelForm">Mesa</th>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <th class="labelForm">Total</th>
+                </div>
+            </tr>
+        </div>
+
+        <div class="row">
+            <tr>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <td class="labelForm">Mateo</td>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <td class="labelForm">1</td>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4">
+                    <td class="labelForm">12000</td>
+                </div>
+            </tr>
+        </div>
+    </table>
+
+</div>

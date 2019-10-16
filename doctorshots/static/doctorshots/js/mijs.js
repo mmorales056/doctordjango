@@ -18,7 +18,7 @@ function editarEmpleado(ruta) {
 
 
 }
-
+//Carga el contendio del formulario crer empleado desde el movil a una modal
 function crearEmpleadoMovil(ruta) {
     $.ajax({
         url: ruta,
@@ -97,5 +97,37 @@ function cargarModal() {
         $('#modalCategoria').modal({
             show: true,
         });
+    }
+}
+
+//Metodo que me carga el formulario de nueva mesa
+function formNuevaMesa(ruta, ruta1) {
+    let select = document.getElementById("mesas");
+    if (select.value === 'nueva') {
+        $('#modalVentas').modal({
+            show: true,
+        });
+        $.ajax({
+            url: ruta,
+            success: function(respuesta) {
+                document.getElementById("resultadoVentas").innerHTML = respuesta
+
+            },
+            error: function() {
+                console.log("error");
+            }
+        })
+    } else {
+        $.ajax({
+            url: ruta1,
+            success: function(respuesta) {
+                document.getElementById("comanda").innerHTML = respuesta
+
+            },
+            error: function() {
+                console.log("error");
+            }
+        })
+
     }
 }
