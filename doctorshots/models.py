@@ -46,6 +46,7 @@ class Productos(models.Model):
 
 class Mesas(models.Model):
     numeroMesa= models.CharField(max_length=2)
+    disponible= models.BooleanField(default=True)
 
 class Ventas(models.Model):
     mesero = models.ForeignKey(Usuarios,on_delete=models.DO_NOTHING)

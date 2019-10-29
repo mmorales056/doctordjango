@@ -1,0 +1,7 @@
+<select class="form-control form-control-sm" name="productos" id="productos">
+        <option >Productos</option>
+          {% for prod in productos %}
+        
+          <option value="{{prod.id}}">{{prod.nombreProducto}} {{ prod.get_presentacionProducto_display }}</option>
+          {% endfor %}
+      </select>

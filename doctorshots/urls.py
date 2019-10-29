@@ -28,5 +28,8 @@ urlpatterns = [
     #MODULO VENTAS
     path('ventas', views.formVentas, name=('formventas')),
     path('nuevamesa', views.formNuevaMesa, name=('nuevaMesa')),
-    path('nuevaventa',views.nuevaVenta, name=('nuevaVenta'))
+    path('nuevaventa',views.nuevaVenta, name=('nuevaVenta')),
+    path('listaprodcat/',views.listaprodcat, name='listaprodcat'),
+    path('agregarproducto', views.agregarProducto, name='agregarproducto')
+
 ]

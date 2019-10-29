@@ -77,18 +77,6 @@ function verProducto(ruta) {
     });
 }
 
-//Este metodo me da formato de punto de mil a los campos que lo requieren
-function notNegative(num) {
-    num = document.getElementById('precioVenta').value;
-    console.log(num);
-    if (num >= 0) {
-        document.getElementById('precioVenta').innerHTML = num;
-        console.log("entro aca");
-    } else {
-        document.getElementById('precioVenta').innerHTML = -(num);
-        console.log("entro aca else");
-    }
-}
 
 //CArgar modal de nueva categoria con su formulario
 function cargarModal() {
@@ -130,4 +118,18 @@ function formNuevaMesa(ruta, ruta1) {
         })
 
     }
+}
+
+function llenar(ruta, categoria) {
+    $.ajax({
+        url: ruta,
+        data: "categoria=" + categoria,
+        method: "get",
+        success: function(respuesta) {
+            document.getElementById("productoselect").innerHTML = respuesta;
+        },
+        error: function() {
+            console.log("no se pueden encontrar los datos");
+        }
+    });
 }

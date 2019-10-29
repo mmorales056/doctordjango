@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.forms.models import model_to_dict
-from doctorshots.models import Usuarios,Productos, CategoriaProducto, Mesas
+from doctorshots.models import Usuarios,Productos, CategoriaProducto, Mesas, Ventas, DetalleVenta
+
 
 # Create your views here.
 '''inicio'''
@@ -22,7 +23,7 @@ def login(request):
         password = request.POST['clave']
         q= Usuarios.objects.get(usuario = usuario)
         if q.clave == password:
-            request.session['logueado'] = [q.cedula, q.nombres, q.clave, q.Rol ]
+            request.session['logueado'] = [q.cedula, q.nombres, q.clave, q.Rol, q.id ]
             return render(request,'doctorshots/index.html')
         else:
             return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=('password invalid',)))
@@ -224,8 +225,8 @@ def crearCategoria(request):
 #Este metodo me inicia el formulari de las ventas
 def formVentas(request):
     try:
-        m =  Mesas.objects.all()
-        contexto = {'mesas':m }
+        m =  Mesas.objects.all()        
+        contexto = {'mesas':m,  }
         return render(request,'doctorshots/ventas.html',contexto)                
     except Exception as e:
         return HttpResponse(e)
@@ -240,3 +241,59 @@ def nuevaVenta(request):
     c = CategoriaProducto.objects.all()
     contexto = {'categorias': c}
     return render(request,'doctorshots/nuevaVenta.html',contexto)
+
+def listaprodcat(request):
+    p = Productos.objects.filter(categoria=request.GET['categoria'])
+    contexto = {'productos': p}
+    return render(request,'doctorshots/selectprod.html',contexto)
+
+idVenta=0
+def agregarProducto(request):
+    try:
+        #CApturamos mesero y mesa 
+        mesero = Usuarios.objects.get(cedula=request.POST['mesero'])
+        mesa = Mesas.objects.get(pk=request.POST['mesa'])
+        #si la mesa esta disponible creamos una nueva
+        print (mesa.disponible)
+        if(mesa.disponible):
+            mesa.disponible=False
+            mesa.save()   
+            venta = Ventas(
+                mesero = mesero,
+                mesa = mesa,
+                total = 0
+            )
+            venta.save()
+            print(venta.id)
+            #CApturamos la venta
+            v= Ventas.objects.get(pk=venta.id)
+            #Variable de session para saber el estado de la venta
+            request.session['idVenta'] = [v.id]
+            #capturamos el producto
+            pro = Productos.objects.get(pk=request.POST['productos'])
+            detalle = DetalleVenta(
+                venta= v,
+                producto = pro,
+                precio = pro.precioVenta,
+                cantidad = request.POST['cantidad']
+            )
+            detalle.save()                                                              
+        else:
+            print('acá')
+            ven = request.session.get('idVenta',False)            
+            print(ven[0])
+            vent= Ventas.objects.get(pk=ven[0])
+            pro = Productos.objects.get(pk=request.POST['productos'])
+                                                
+            detalle = DetalleVenta(
+                venta= vent,
+                producto = pro,
+                precio = pro.precioVenta,
+                cantidad = request.POST['cantidad']
+            )
+            detalle.save()
+            
+                                                                              
+        return HttpResponseRedirect(reverse('doctorshots:formventas'))
+    except Exception as e:
+        return HttpResponse(e)

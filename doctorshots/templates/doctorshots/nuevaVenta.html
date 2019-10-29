@@ -1,23 +1,38 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-4 col-sm-4 col-md-4">
-            <select name="categorias" id="" onchange="llenarProductos()">
-                        <option > Categorias </option>
-                        {% for categoria in categorias %}
-                            <option value="{{categoria.id}}">{{categoria.descripcion}}</option>
-                        {% endfor %}
-                    </select>
-        </div>
-        <div class="col-4 col-sm-4 col-md-4">
-            <select name="" id="">
-                        <option > Producto </option>
-                    </select>
-        </div>
-        <div class="col-4 col-sm-4 col-md-4">
-            <th><input type="number" placeholder="Cantidad"></th>
+        <div class="col-12 col-sm-12 col-md-12">
+            <select class="form-control form-control-sm" name="categoria" id="categorias" onchange="llenar('{% url 'doctorshots:listaprodcat'%}',this.value)">
+                <option value="">Categoria</option>
+                {% for categoria in categorias  %}
+                <option value="{{categoria.id}}"> {{categoria.descripcion}} </option>
+                {% endfor %}
+                <option value="nueva">Nueva Categoria</option>
+            </select>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 mt-2" id="productoselect">
+            <select class="form-control form-control-sm">
+                            <option >Productos</option>
+                    </select>
 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 mt-2" id="productoselect">
+            <input type="number" name="cantidad" placeholder="Cantidad"> </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 mt-2 ">
+        <input class="btn btn-success" type="submit" value="Agregar">
+    </div>
+</div>
+</form>
+
+</div>
+
+<div class="container-fluid">
     <table class="table">
         <div class="row">
             <tr>
