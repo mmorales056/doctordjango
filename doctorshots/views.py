@@ -238,14 +238,20 @@ def formNuevaMesa(request):
         return render(request,'doctorshots/nuevaMesa.html')
 
 def nuevaVenta(request):
-    mesa = request.GET['idMesa']
+    try:
+        mesa = request.GET['idMesa']
+        print(mesa)
     
-    v= Ventas.objects.get(mesa_id=mesa,estado=1)
-    c = CategoriaProducto.objects.all()
+        v= Ventas.objects.get(mesa_id=mesa,estado=1)
+        c = CategoriaProducto.objects.all()
+        contexto = {'categorias': c, 'venta':v}
     
-    contexto = {'categorias': c, 'venta':v}
+        return render(request,'doctorshots/nuevaVenta.html',contexto)
+    except Exception as e:
+        return HttpResponse(e)
     
-    return render(request,'doctorshots/nuevaVenta.html',contexto)
+    
+    
 
 def listaprodcat(request):
     p = Productos.objects.filter(categoria=request.GET['categoria'])
