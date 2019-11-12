@@ -238,8 +238,13 @@ def formNuevaMesa(request):
         return render(request,'doctorshots/nuevaMesa.html')
 
 def nuevaVenta(request):
+    mesa = request.GET['idMesa']
+    
+    v= Ventas.objects.get(mesa_id=mesa,estado=1)
     c = CategoriaProducto.objects.all()
-    contexto = {'categorias': c}
+    
+    contexto = {'categorias': c, 'venta':v}
+    
     return render(request,'doctorshots/nuevaVenta.html',contexto)
 
 def listaprodcat(request):
@@ -247,7 +252,7 @@ def listaprodcat(request):
     contexto = {'productos': p}
     return render(request,'doctorshots/selectprod.html',contexto)
 
-idVenta=0
+
 def agregarProducto(request):
     try:
         #CApturamos mesero y mesa 
@@ -266,32 +271,55 @@ def agregarProducto(request):
             venta.save()
             print(venta.id)
             #CApturamos la venta
-            v= Ventas.objects.get(pk=venta.id)
-            #Variable de session para saber el estado de la venta
-            request.session['idVenta'] = [v.id]
+            vent= Ventas.objects.get(pk=venta.id)
             #capturamos el producto
             pro = Productos.objects.get(pk=request.POST['productos'])
-            detalle = DetalleVenta(
-                venta= v,
-                producto = pro,
-                precio = pro.precioVenta,
-                cantidad = request.POST['cantidad']
-            )
-            detalle.save()                                                              
-        else:
-            print('acá')
-            ven = request.session.get('idVenta',False)            
-            print(ven[0])
-            vent= Ventas.objects.get(pk=ven[0])
-            pro = Productos.objects.get(pk=request.POST['productos'])
-                                                
             detalle = DetalleVenta(
                 venta= vent,
                 producto = pro,
                 precio = pro.precioVenta,
                 cantidad = request.POST['cantidad']
             )
-            detalle.save()
+            cantidadInventario = int(pro.cantidad)
+            cantidadPedido = int(detalle.cantidad)                 
+            pro.cantidad = int(cantidadInventario)- int(cantidadPedido)
+            if pro.cantidad > 0:
+                detalle.save()                
+                vent.total+= detalle.precio * float(int(detalle.cantidad))
+                cantidadInventario = int(pro.cantidad)
+                cantidadPedido = int(detalle.cantidad)                 
+                pro.cantidad= int(cantidadInventario-cantidadPedido)
+                vent.save()
+                pro.save()
+            else:
+                print("sin  stock en el inventario")                                                             
+        else:
+            print('acá 2')
+            #Capturamos variable de session que controla la mesa
+            vent = Ventas.objects.get(mesa_id=request.POST['mesa'])
+            print(vent.mesa_id)         
+            #Obtenemos el producto seleccionado 
+            pro = Productos.objects.get(pk=request.POST['productos'])
+            #Capturamos el detalle de la venta
+            detalle = DetalleVenta(
+                venta= vent,
+                producto = pro,
+                precio = pro.precioVenta,
+                cantidad = request.POST['cantidad']
+            )
+            #calculamos el total del stock para reducir el inventario
+            cantidadInventario = int(pro.cantidad)
+            cantidadPedido = int(detalle.cantidad)                 
+            pro.cantidad= int(cantidadInventario)- int(cantidadPedido)
+            #preguntamos si hay existencia del producto
+            if pro.cantidad > 0:
+                #se guardan los cambios
+                detalle.save()                
+                vent.total+= detalle.precio * float(int(detalle.cantidad))                
+                vent.save()
+                pro.save()
+            else: 
+                print("sin  stock en el inventario") 
             
                                                                               
         return HttpResponseRedirect(reverse('doctorshots:formventas'))

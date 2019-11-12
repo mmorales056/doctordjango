@@ -89,7 +89,7 @@ function cargarModal() {
 }
 
 //Metodo que me carga el formulario de nueva mesa
-function formNuevaMesa(ruta, ruta1) {
+function formNuevaMesa(ruta, ruta1, idMesa) {
     let select = document.getElementById("mesas");
     if (select.value === 'nueva') {
         $('#modalVentas').modal({
@@ -108,6 +108,8 @@ function formNuevaMesa(ruta, ruta1) {
     } else {
         $.ajax({
             url: ruta1,
+            data: "idMesa=" + idMesa,
+            method: 'GET',
             success: function(respuesta) {
                 document.getElementById("comanda").innerHTML = respuesta
 

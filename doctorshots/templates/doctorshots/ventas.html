@@ -10,7 +10,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="mesero" value="{{request.session.logueado.0}}">
                     <div class="col-sm-8">
-                        <select class="form-control form-control-sm" name="mesa" id="mesas" onchange="formNuevaMesa('{% url 'doctorshots:nuevaMesa' %}','{% url 'doctorshots:nuevaVenta' %}')">
+                        <select class="form-control form-control-sm" name="mesa" id="mesas" onchange="formNuevaMesa('{% url 'doctorshots:nuevaMesa'%}','{% url 'doctorshots:nuevaVenta' %}', this.value)">
                <option> Seleccione la mesa </option>
                 {% for mesa in mesas  %}
                     <option value="{{mesa.id}}"> Mesa {{mesa.numeroMesa}} </option>
