@@ -135,3 +135,15 @@ function llenar(ruta, categoria) {
         }
     });
 }
+
+function pagar(ruta) {
+    $.ajax({
+        url: ruta,
+        success: function() {
+            alert("Pagó")
+        },
+        error: function() {
+            console.log("erro");
+        }
+    })
+}

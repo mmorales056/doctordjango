@@ -36,30 +36,42 @@
     <table class="table">
         <div class="row">
             <tr>
-                <div class="col-4 col-sm-4 col-md-4">
+                <div class="col-3 col-sm-3 col-md-3">
                     <th class="labelForm">Mesero</th>
                 </div>
-                <div class="col-4 col-sm-4 col-md-4">
+                <div class="col-3 col-sm-3 col-md-3">
                     <th class="labelForm">Mesa</th>
                 </div>
-                <div class="col-4 col-sm-4 col-md-4">
+                <div class="col-3 col-sm-3 col-md-3">
                     <th class="labelForm">Total</th>
                 </div>
+                <div class="col-3 col-sm-3 col-md-3">
+                    <th class="labelForm">Acciones</th>
+                </div>
+                
             </tr>
         </div>
 
         <div class="row">
             <tr>
-                <div class="col-4 col-sm-4 col-md-4">
+                {% if venta.estado != False  %}
+                
+                
+                
+                <div class="col-4 col-sm-4 col-md-3">
                     <td class="labelForm">{{venta.mesero_id}}</td>
                 </div>
-                <div class="col-4 col-sm-4 col-md-4">
+                <div class="col-4 col-sm-4 col-md-3">
                     <td class="labelForm">{{venta.mesa_id}}</td>
                 </div>
-                <div class="col-4 col-sm-4 col-md-4">
+                <div class="col-4 col-sm-4 col-md-3">
                     <td class="labelForm">{{venta.total}}</td>
                 </div>
-            </tr>            
+                <div class="col-3 col-sm-4 col-md-3">
+                    <td class="labelForm"><input type="button" value="Pagar" onclick="pagar('{% url 'doctorshots:pagar' venta.id %}')" class="btn btn-success"></td>
+                </div>
+                {% endif %}
+            </tr>   
         </div>
     </table>
 

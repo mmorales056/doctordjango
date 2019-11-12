@@ -239,10 +239,9 @@ def formNuevaMesa(request):
 
 def nuevaVenta(request):
     try:
-        mesa = request.GET['idMesa']
-        print(mesa)
-    
-        v= Ventas.objects.get(mesa_id=mesa,estado=1)
+        mesa = request.GET['idMesa']    
+        v= Ventas.objects.get(mesa_id=mesa, estado=1)
+        print(v.estado)
         c = CategoriaProducto.objects.all()
         contexto = {'categorias': c, 'venta':v}
     
@@ -280,15 +279,18 @@ def agregarProducto(request):
             vent= Ventas.objects.get(pk=venta.id)
             #capturamos el producto
             pro = Productos.objects.get(pk=request.POST['productos'])
+            #Agregamos el detalle de la venta
             detalle = DetalleVenta(
                 venta= vent,
                 producto = pro,
                 precio = pro.precioVenta,
                 cantidad = request.POST['cantidad']
             )
+            #calculamos que en el stock haya existencia del producto
             cantidadInventario = int(pro.cantidad)
             cantidadPedido = int(detalle.cantidad)                 
             pro.cantidad = int(cantidadInventario)- int(cantidadPedido)
+            #si hay existencia se guarda
             if pro.cantidad > 0:
                 detalle.save()                
                 vent.total+= detalle.precio * float(int(detalle.cantidad))
@@ -296,17 +298,18 @@ def agregarProducto(request):
                 cantidadPedido = int(detalle.cantidad)                 
                 pro.cantidad= int(cantidadInventario-cantidadPedido)
                 vent.save()
-                pro.save()
+                pro.save()                
             else:
+                # si no se manda mensaje
                 print("sin  stock en el inventario")                                                             
         else:
-            print('acá 2')
-            #Capturamos variable de session que controla la mesa
+            #SI ya existe un cliente en la mesa se actualiza el detalle
+            #Capturamos variable  que controla la mesa
             vent = Ventas.objects.get(mesa_id=request.POST['mesa'])
-            print(vent.mesa_id)         
-            #Obtenemos el producto seleccionado 
+            print(vent)           
+            #Obtenemos el producto seleccionado
             pro = Productos.objects.get(pk=request.POST['productos'])
-            #Capturamos el detalle de la venta
+            #Creamos el detalle de la venta 
             detalle = DetalleVenta(
                 venta= vent,
                 producto = pro,
@@ -325,9 +328,22 @@ def agregarProducto(request):
                 vent.save()
                 pro.save()
             else: 
-                print("sin  stock en el inventario") 
-            
-                                                                              
+                print("sin  stock en el inventario")
+            return HttpResponseRedirect(reverse('doctorshots:formventas'))
+                                                                
+    except Exception as e:
+        return HttpResponse(e)
+
+
+def pagar(request, id):
+    try:
+        venta = Ventas.objects.get(pk=id)
+        venta.estado=False
+        
+        mesa = Mesas.objects.get(pk= venta.mesa_id)
+        mesa.disponible=True
+        venta.save()
+        mesa.save()
         return HttpResponseRedirect(reverse('doctorshots:formventas'))
     except Exception as e:
         return HttpResponse(e)
