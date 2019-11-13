@@ -239,15 +239,31 @@ def formNuevaMesa(request):
 
 def nuevaVenta(request):
     try:
-        mesa = request.GET['idMesa']    
-        v= Ventas.objects.get(mesa_id=mesa, estado=1)
+        mesa = request.GET['idMesa']            
+        v= Ventas.objects.get(mesa_id=mesa,estado=1)
         print(v.estado)
         c = CategoriaProducto.objects.all()
         contexto = {'categorias': c, 'venta':v}
-    
         return render(request,'doctorshots/nuevaVenta.html',contexto)
     except Exception as e:
-        return HttpResponse(e)
+        if str(e) == "Ventas matching query does not exist.":
+            idMesa= request.GET['idMesa']
+            mesa = Mesas.objects.get(pk=idMesa)
+            ses = request.session.get('logueado',False)
+            m = Usuarios.objects.get(cedula=ses[0])
+            v= Ventas(
+                mesero=m,
+                mesa=mesa ,
+                total=0
+            )
+            v.save()
+            c = CategoriaProducto.objects.all()
+            contexto = {'categorias': c, 'venta':v}
+            return render(request,'doctorshots/nuevaVenta.html',contexto)
+
+        else:
+            
+            return HttpResponse(e)
     
     
     
@@ -298,10 +314,14 @@ def agregarProducto(request):
                 cantidadPedido = int(detalle.cantidad)                 
                 pro.cantidad= int(cantidadInventario-cantidadPedido)
                 vent.save()
-                pro.save()                
+                pro.save()
+                return HttpResponseRedirect(reverse('doctorshots:formventas'))
+                
             else:
                 # si no se manda mensaje
-                print("sin  stock en el inventario")                                                             
+                print("sin  stock en el inventario")
+                return HttpResponseRedirect(reverse('doctorshots:formventas'))
+                                                             
         else:
             #SI ya existe un cliente en la mesa se actualiza el detalle
             #Capturamos variable  que controla la mesa
@@ -327,9 +347,12 @@ def agregarProducto(request):
                 vent.total+= detalle.precio * float(int(detalle.cantidad))                
                 vent.save()
                 pro.save()
+                return HttpResponseRedirect(reverse('doctorshots:formventas'))
+
             else: 
                 print("sin  stock en el inventario")
-            return HttpResponseRedirect(reverse('doctorshots:formventas'))
+                return HttpResponseRedirect(reverse('doctorshots:formventas'))
+
                                                                 
     except Exception as e:
         return HttpResponse(e)
