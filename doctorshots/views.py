@@ -246,7 +246,6 @@ def nuevaVenta(request):
         contexto = {'categorias': c, 'venta':v}
         return render(request,'doctorshots/nuevaVenta.html',contexto)
     except Exception as e:
-        if str(e) == "Ventas matching query does not exist.":
             idMesa= request.GET['idMesa']
             mesa = Mesas.objects.get(pk=idMesa)
             ses = request.session.get('logueado',False)
@@ -254,16 +253,13 @@ def nuevaVenta(request):
             v= Ventas(
                 mesero=m,
                 mesa=mesa ,
-                total=0
+                total=0,
+                estado = 1
             )
             v.save()
             c = CategoriaProducto.objects.all()
             contexto = {'categorias': c, 'venta':v}
-            return render(request,'doctorshots/nuevaVenta.html',contexto)
-
-        else:
-            
-            return HttpResponse(e)
+            return render(request,'doctorshots/nuevaVenta.html',contexto)    
     
     
     
@@ -279,82 +275,38 @@ def agregarProducto(request):
         #CApturamos mesero y mesa 
         mesero = Usuarios.objects.get(cedula=request.POST['mesero'])
         mesa = Mesas.objects.get(pk=request.POST['mesa'])
-        #si la mesa esta disponible creamos una nueva
-        print (mesa.disponible)
-        if(mesa.disponible):
-            mesa.disponible=False
-            mesa.save()   
-            venta = Ventas(
-                mesero = mesero,
-                mesa = mesa,
-                total = 0
-            )
-            venta.save()
-            print(venta.id)
-            #CApturamos la venta
-            vent= Ventas.objects.get(pk=venta.id)
-            #capturamos el producto
-            pro = Productos.objects.get(pk=request.POST['productos'])
-            #Agregamos el detalle de la venta
-            detalle = DetalleVenta(
-                venta= vent,
-                producto = pro,
-                precio = pro.precioVenta,
-                cantidad = request.POST['cantidad']
-            )
-            #calculamos que en el stock haya existencia del producto
+        v= Ventas.objects.get(mesa=mesa, estado=1)
+        #capturamos el producto
+        pro = Productos.objects.get(pk=request.POST['productos'])
+        #Agregamos el detalle de la venta
+        detalle = DetalleVenta(
+            venta= v,
+            producto = pro,
+            precio = pro.precioVenta,
+            cantidad = request.POST['cantidad']
+        )
+        #calculamos que en el stock haya existencia del producto
+        cantidadInventario = int(pro.cantidad)
+        cantidadPedido = int(detalle.cantidad)                 
+        pro.cantidad = int(cantidadInventario)- int(cantidadPedido)
+        #si hay existencia se guarda
+        if pro.cantidad > 0:
+            detalle.save()                
+            v.total+= detalle.precio * float(int(detalle.cantidad))
             cantidadInventario = int(pro.cantidad)
             cantidadPedido = int(detalle.cantidad)                 
-            pro.cantidad = int(cantidadInventario)- int(cantidadPedido)
-            #si hay existencia se guarda
-            if pro.cantidad > 0:
-                detalle.save()                
-                vent.total+= detalle.precio * float(int(detalle.cantidad))
-                cantidadInventario = int(pro.cantidad)
-                cantidadPedido = int(detalle.cantidad)                 
-                pro.cantidad= int(cantidadInventario-cantidadPedido)
-                vent.save()
-                pro.save()
-                return HttpResponseRedirect(reverse('doctorshots:formventas'))
-                
-            else:
-                # si no se manda mensaje
-                print("sin  stock en el inventario")
-                return HttpResponseRedirect(reverse('doctorshots:formventas'))
-                                                             
+            pro.cantidad= int(cantidadInventario-cantidadPedido)
+            v.save()
+            pro.save()
+            return HttpResponseRedirect(reverse('doctorshots:formventas'))
+            
         else:
-            #SI ya existe un cliente en la mesa se actualiza el detalle
-            #Capturamos variable  que controla la mesa
-            vent = Ventas.objects.get(mesa_id=request.POST['mesa'])
-            print(vent)           
-            #Obtenemos el producto seleccionado
-            pro = Productos.objects.get(pk=request.POST['productos'])
-            #Creamos el detalle de la venta 
-            detalle = DetalleVenta(
-                venta= vent,
-                producto = pro,
-                precio = pro.precioVenta,
-                cantidad = request.POST['cantidad']
-            )
-            #calculamos el total del stock para reducir el inventario
-            cantidadInventario = int(pro.cantidad)
-            cantidadPedido = int(detalle.cantidad)                 
-            pro.cantidad= int(cantidadInventario)- int(cantidadPedido)
-            #preguntamos si hay existencia del producto
-            if pro.cantidad > 0:
-                #se guardan los cambios
-                detalle.save()                
-                vent.total+= detalle.precio * float(int(detalle.cantidad))                
-                vent.save()
-                pro.save()
-                return HttpResponseRedirect(reverse('doctorshots:formventas'))
-
-            else: 
-                print("sin  stock en el inventario")
-                return HttpResponseRedirect(reverse('doctorshots:formventas'))
-
-                                                                
+            # si no se manda mensaje
+            print("sin  stock en el inventario")
+            return HttpResponseRedirect(reverse('doctorshots:formventas'))
+                                                                                                                                    
     except Exception as e:
+        print('entro acá')
         return HttpResponse(e)
 
 
