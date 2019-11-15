@@ -3,6 +3,8 @@ from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.forms.models import model_to_dict
 from doctorshots.models import Usuarios,Productos, CategoriaProducto, Mesas, Ventas, DetalleVenta
+from datetime import date
+from datetime import datetime
 
 
 # Create your views here.
@@ -22,6 +24,11 @@ def login(request):
         usuario = request.POST['usuario']
         password = request.POST['clave']
         q= Usuarios.objects.get(usuario = usuario)
+       
+
+        #Fecha actual
+
+        
         if q.clave == password:
             request.session['logueado'] = [q.cedula, q.nombres, q.clave, q.Rol, q.id ]
             return render(request,'doctorshots/index.html')
@@ -278,11 +285,14 @@ def nuevaVenta(request):
             mesa = Mesas.objects.get(pk=idMesa)
             ses = request.session.get('logueado',False)
             m = Usuarios.objects.get(cedula=ses[0])
-            v= Ventas(
+            now = datetime.now()
+
+            v= Ventas( 
                 mesero=m,
                 mesa=mesa ,
                 total=0,
-                estado = 1
+                estado = 1,
+                fecha = now
             )
             v.save()
             c = CategoriaProducto.objects.all()
