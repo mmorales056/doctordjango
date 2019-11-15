@@ -7,9 +7,9 @@
         </div>
         <select name="categoria" class="browser-default custom-select">
                                             <option class="font-drop upper font-color-drop-little" >Seleccione una</option>
-                                    {% for cat in categorias %}
-                                        <option class="font-drop upper font-color-drop-little" value="{{cat.tipo}}">{{cat.descripcion}}</option>
-                                    {% endfor %}
+                                            {% for cat in categorias %}
+                                            <option class="font-drop upper font-color-drop-little" value="{{cat.id}}">{{cat.descripcion}}</option>
+                                        {% endfor %}
                                 
                             </select>
     </div>

@@ -83,7 +83,7 @@ def formularioActualizarEmpleado(request,id):
     except Exception as e:
         return HttpResponse(e)
 #Este metodo se encarga de cargarme el template para actualizar el empleado
-def actualizarEmpleado(requuest):
+def actualizarEmpleado(request):
     try:
         id = request.POST['id']
         q = Usuarios.objects.get(pk=id)
@@ -161,8 +161,18 @@ def verProducto(request,id):
         return HttpResponse(e)
 #MEtodo que me crea un producto    
 def crearProductoMovil(request):
+
     try:
-        return render(request,'doctorshots/crear-producto-movil.html')
+        ses = request.session.get('logueado',False)
+        if ses and ses[3]=='2':
+            #CApturamos todas las categorias 
+            c = CategoriaProducto.objects.all()
+            print(c)
+            #Capturamos todos los prpdutos
+            p = Productos.objects.all()
+            
+            contexto= {'productos': p, 'categorias':c}
+        return render(request,'doctorshots/crear-producto-movil.html',contexto)
     except Exception as e:
         return HttpResponse(e)
 #MEtodo que me carga el formulario editar producto
@@ -236,14 +246,32 @@ def formNuevaMesa(request):
     ses = request.session.get('logueado',False)
     if ses and ses[3]=='2':        
         return render(request,'doctorshots/nuevaMesa.html')
+def guardarmesa(request):
+    try:
+        idmesa = request.POST['numeroMesa']  
+        mesa = Mesas (
+            numeroMesa = idmesa
+        )
+        mesa.save()
+        
+        return HttpResponseRedirect(reverse ('doctorshots:formventas'))
+
+
+    except Exception as e:
+        return HttpResponse(e)
+
+    
+
+    
 
 def nuevaVenta(request):
     try:
-        mesa = request.GET['idMesa']            
+        mesa = request.GET['idMesa']    
+        m= Mesas.objects.get(pk=mesa)
         v= Ventas.objects.get(mesa_id=mesa,estado=1)
         print(v.estado)
         c = CategoriaProducto.objects.all()
-        contexto = {'categorias': c, 'venta':v}
+        contexto = {'categorias': c, 'venta':v, 'mesa':m}
         return render(request,'doctorshots/nuevaVenta.html',contexto)
     except Exception as e:
             idMesa= request.GET['idMesa']
