@@ -112,6 +112,8 @@ function formNuevaMesa(ruta, ruta1, idMesa) {
             method: 'GET',
             success: function(respuesta) {
                 document.getElementById("comanda").innerHTML = respuesta
+                document.getElementById("comanda-pc").innerHTML = respuesta
+
 
             },
             error: function() {

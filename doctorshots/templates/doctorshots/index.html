@@ -10,11 +10,18 @@
  
    {% endblock %}
    
-  {% block parallax %}  
-
-  <div   class="parallax-window"  data-parallax="scroll" data-image-src="{% static 'doctorshots/img/header.jpg'%}" >
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-   
-    </div>
   
-  {% endblock %}
+   {% block parallax %}  
+   <div   class="parallax-window"  data-parallax="scroll" data-image-src="{% static 'doctorshots/img/header.jpg'%}" >
+     {% if request.session.logueado.3 != '1' and request.session.logueado.3 != '2' %}
+    <div class="rotateIn animated letra">¡¡Bienvenido!!</div>
+    <!-- <div><img  src="{% static 'doctorshots/img/baccccccccck.gif' %}"></div> -->
+      
+
+     {% elif request.session.logueado.3 == '2' or request.session.logueado.3 == '1' %}
+    <div class="rotateIn animated letra">¡¡Bienvenido {{ request.session.logueado.1 }}!!</div> 
+    <!-- <img src="{% static 'doctorshots/img/baccccccccck.gif" >   -->
+   
+     {% endif %}
+   {% endblock %}
+

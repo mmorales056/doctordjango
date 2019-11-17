@@ -1,0 +1,509 @@
+{% extends 'doctorshots/base.html' %}
+ {% block titulo %} Welcome to Doctor Shot {% endblock %} 
+ {% block body %}<body> {% endblock %}
+  {% block header %}
+<header class="header"> {% endblock %}
+      
+      
+  {% block complement %}
+  {% load static %}
+     <div class="ce">
+         <!-- row one -->
+         <div class="carousel-item">
+                <img src="..." alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>...</h5>
+                  <p>...</p>
+                </div>
+              </div>
+         <div class="row"> 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguila</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>355ml Cerveza</h4>
+                             <p>Precio: 3.000</p>
+ 
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/cervezaAguila.png' %}"></div>
+                 </div>
+             </div>
+       
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Pilsen</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>355ml Cerveza</h4>
+                             <p>Precio: 3.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/cervezapilsen.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Club Colombia</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>355ml Cerveza</h4>
+                             <p>Precio: 3.500</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/clubcolombia.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row two -->
+         <div class="row">
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguila Light</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>355ml Cerveza</h4>
+                             <p>Precio: 3.500</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/aguila-light.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Paises Bajos</div>
+                         <div class="profession">Heineken</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>330ml Cerveza</h4>
+                             <p>Precio: 3.500</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/cervezaHeineken.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">México</div>
+                         <div class="profession">Corona</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>355ml Cerveza</h4>
+                             <p>Precio: 6.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/corona.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row three -->
+         <div class="row">
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Cerveza Artesanal BBC</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>330ml Cerveza</h4>
+                             <p>Precio: 4.500</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/artesanal.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Redd</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>263ml Cerveza</h4>
+                             <p>Precio: 2.500</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/cervezaredd.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Republica Checa</div>
+                         <div class="profession">Budweiser</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>355ml Cerveza</h4>
+                             <p>Precio: 3.500</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/budweiser.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+     </div>   
+     <!-- row one -->
+     <div class="lic">
+         <div class="row">
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Ron Medellín</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>2000ml (Garrafa)</h4>
+                             <p>Precio: 160.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/RonGarrafa.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Ron Medellín</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>1000ml (Litro)</h4>
+                             <p>Precio: 95.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/litroR.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Ron Medellín</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml (Botella)</h4>
+                             <p>Precio: 35.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/BotellaR.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row two -->
+         <div class="row">
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Ron Medellín</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>375ml (Media)</h4>
+                             <p>Precio: 21.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/mediaR.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>2000ml (Garrafa)</h4>
+                             <p>Precio: 150.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/AnGr.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession"> Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>2000ml (Garrafa Sin Azúcar)</h4>
+                             <p>Precio: 155.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/AnGa.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row three -->
+         <div class="row">
+             <div class="col-lg-4 col-md-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>1000ml (Litro)</h4>
+                             <p>Precio: 85.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/litroAR.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>1000ml (Litro Sin Azúcar)</h4>
+                             <p>Precio: 90.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/litroAA.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml (Botella)</h4>
+                             <p>Precio: 75.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/BotellaAR.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row four -->
+         <div class="row">    
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml (Botella sin Azúcar)</h4>
+                             <p>Precio: 80.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/BotellaAA.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession">Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>350ml (Media)</h4>
+                             <p>Precio: 28.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/AaC.png' %}"></div>
+                  
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Colombia</div>
+                         <div class="profession"> Aguardiente Antioqueño</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>350ml (Media sin Azúcar)</h4>
+                             <p>Precio: 30.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/Aan.png' %}"></div>
+ 
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row five -->
+         <div class="row">
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Suecia</div>
+                         <div class="profession">Absolut Vodka</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 135.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/Vodka.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Rusia</div>
+                         <div class="profession">Smirnoff Vodka</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 115.000</p>
+                         </div>
+                     </div>
+ 
+                     <div><img class="foto" src="{% static 'doctorshots/img/Vodka1.png' %}"></div>
+                 </div>
+             </div>
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Reino Unido</div>
+                         <div class="profession">Old Parr Whisky</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 95.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/oldparr.png' %}"></div>
+                 </div>
+             </div>
+         </div>    
+ 
+         <!-- row six -->
+         <div class="row">    
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">EE.UU</div>
+                         <div class="profession">Jack Daniels Whisky</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 110.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/jack.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">Escocia</div>
+                         <div class="profession">Red Label Whisky</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 95.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/redlabel.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">México</div>
+                         <div class="profession">Jose Cuervo Tequila</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 120.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/cuervo.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+ 
+         <!-- row seven -->
+         <div class="row">
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">México</div>
+                         <div class="profession">1800 Tequila</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 170.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/tequilaR.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">México</div>
+                         <div class="profession">1800 Silver Tequila</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 180.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/tequilaS.png' %}"></div>
+                 </div>
+             </div>
+ 
+             <div class="col-lg-4 col-md-3 col-sm-2">
+                 <div class="user-card">
+                     <div class="info">
+                         <div class="name">México</div>
+                         <div class="profession">Don Julio Tequila</div>
+                         <div class="div"></div>
+                         <div class="desc">
+                             <h4>750ml-(Botella)</h4>
+                             <p>Precio: 200.000</p>
+                         </div>
+                     </div>
+                     <div><img class="foto" src="{% static 'doctorshots/img/donjulio.png' %}"></div>
+                 </div>
+             </div>
+         </div>
+     </div>     
+     {% endblock %}
+     {% block parallax %}  
+     <div   class="parallax-window"  data-parallax="scroll" data-image-src="{% static 'doctorshots/img/header.jpg'%}" >
+      <div class="rotateIn animated letra">¡¡Nuestras Bebidas!!</div></div>
+          
+       
+     {% endblock %}
+

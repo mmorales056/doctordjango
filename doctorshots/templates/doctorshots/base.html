@@ -12,6 +12,7 @@
     <link rel="stylesheet"  href="{% static 'doctorshots/css/all.css' %}">
     <link rel="stylesheet"  href="{% static 'doctorshots/css/fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'doctorshots/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'doctorshots/css/animate.css' %}">
 
     <title> {% block titulo %} {% endblock  %}</title>
 </head>
@@ -29,7 +30,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active" id="example">
-                <a class="nav-link carta"   href="#">Carta <span class="sr-only">(current)</span></a>
+                    <a class="nav-link carta"   href="{% url 'doctorshots:carta' %}">Carta <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="#">Eventos</a>
@@ -67,7 +68,7 @@
                 <a class="nav-link"  href="{% url 'doctorshots:formproductos' 'false' %}"> Inventario <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">Carta</a>
+                    <a class="nav-link carta"   href="{% url 'doctorshots:carta' %}">Carta <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link " href="{% url 'doctorshots:formventas' %}">Ventas</a>
@@ -93,7 +94,10 @@
 {% block parallax %}
 {% endblock %}
 
-
+<div id="complement">
+        {% block complement %}
+        {% endblock %}
+    </div>
 
     
 <script src="{% static 'doctorshots/js/jquery-3.3.1.slim.min.js' %}"></script>

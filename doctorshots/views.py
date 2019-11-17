@@ -296,7 +296,8 @@ def nuevaVenta(request):
             )
             v.save()
             c = CategoriaProducto.objects.all()
-            contexto = {'categorias': c, 'venta':v}
+            p = Productos.objects.all()
+            contexto = {'categorias': c, 'venta':v, 'productos':p}
             return render(request,'doctorshots/nuevaVenta.html',contexto)    
     
     
@@ -326,15 +327,17 @@ def agregarProducto(request):
         #calculamos que en el stock haya existencia del producto
         cantidadInventario = int(pro.cantidad)
         cantidadPedido = int(detalle.cantidad)                 
-        pro.cantidad = int(cantidadInventario)- int(cantidadPedido)
+        necesario= int(cantidadInventario)- int(cantidadPedido)
         #si hay existencia se guarda
-        if pro.cantidad > 0:
+        if necesario > 0:
             detalle.save()                
             v.total+= detalle.precio * float(int(detalle.cantidad))
             cantidadInventario = int(pro.cantidad)
-            cantidadPedido = int(detalle.cantidad)                 
+            cantidadPedido = int(detalle.cantidad)     
+            print('cantidad'+str(cantidadInventario))            
             pro.cantidad= int(cantidadInventario-cantidadPedido)
             v.save()
+            print(pro.cantidad)
             pro.save()
             return HttpResponseRedirect(reverse('doctorshots:formventas'))
             
@@ -346,6 +349,10 @@ def agregarProducto(request):
     except Exception as e:
         print('entro acá')
         return HttpResponse(e)
+
+def carta(request):
+    return render(request, 'doctorshots/carta.html')  
+
 
 
 def pagar(request, id):

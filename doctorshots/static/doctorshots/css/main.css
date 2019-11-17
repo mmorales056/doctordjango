@@ -84,6 +84,17 @@ div .opacity {
 }
 
 
+.campos {
+    color: white;
+}
+
+.tamam {
+    width: 100%
+}
+
+
+
+
 /* Fin Empleado  */
 
 
@@ -124,4 +135,8 @@ div div div div div form div.campos {
 
 .labelForm {
     color: white;
+}
+.parallax-window{
+
+    height: 888px;
 }

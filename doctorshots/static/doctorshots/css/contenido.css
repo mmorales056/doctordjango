@@ -27,9 +27,9 @@
     height: 80vh;
 }
 .letra {
-    font-size: 64px;
-    top: 200px;
-    bottom: 150px;
+    font-size: 50px;
+    top: 110px;
+    bottom: 330px;
     background: rgba(0, 0, 0, 0.7);
     position: absolute;
     right: 15%;
