@@ -27,12 +27,13 @@ urlpatterns = [
     path('eliminarproducto/<int:id>', views.eliminarProducto, name=('eliminarproducto')),
     path('crearcategoria', views.crearCategoria, name=('agregarcategoria')),
     #MODULO VENTAS
-    path('ventas', views.formVentas, name=('formventas')),
+    path('ventas/<str:mensaje>', views.formVentas, name=('formventas')),
     path('nuevamesa', views.formNuevaMesa, name=('nuevaMesa')),
     path('guardarmesa', views.guardarmesa, name='guardarmesa'),
     path('nuevaventa',views.nuevaVenta, name=('nuevaVenta')),
     path('listaprodcat/',views.listaprodcat, name='listaprodcat'),
     path('agregarproducto', views.agregarProducto, name='agregarproducto'),
-    path('pagar/<int:id>', views.pagar, name="pagar")
+    path('pagar/<int:id>', views.pagar, name="pagar"),
+    path('detalleventa/<int:id>', views.detalleVenta,name='detalleventa')
 
 ]

@@ -6,6 +6,11 @@
         <div class="container mt-4">
             <!-- MOVIL-->
             <div class="d-block d-sm-block d-md-none">
+                {% if 'productoAdd' in mensaje %}
+                <div class="alert alert-success" role="alert">
+                    Producto guardado
+                </div>
+                {% endif %}
                 <form action="{% url 'doctorshots:agregarproducto'%}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="mesero" value="{{request.session.logueado.0}}">
@@ -25,7 +30,7 @@
         </div>
 
 
-        <div class="modal fade" id="modalVentas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalVenta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -34,7 +39,19 @@
                 <span aria-hidden="true">&times;</span>
               </button>
                     </div>
-                    <div class="modal-body" id="resultadoVentas">
+                    <div class="modal-body" id="cuerpoModal">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <td>producto</td>
+                                    <td>Precio</td>
+                                    <td>cantidad</td>
+                                </tr>
+                            </thead>
+                            <tbody id="detalle">
+
+                            </tbody>
+                        </table>
 
                     </div>
                     <div class="modal-footer">

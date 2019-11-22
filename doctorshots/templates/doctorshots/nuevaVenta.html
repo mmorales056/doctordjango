@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12">
+        <div class="col-12 col-sm-12 col-md-12">   
             <select class="form-control form-control-sm" name="categoria" id="categorias" onchange="llenar('{% url 'doctorshots:listaprodcat'%}',this.value)">
                 <option value="">Categoria</option>
                 {% for categoria in categorias  %}
@@ -68,7 +68,8 @@
                     <td class="labelForm">{{venta.total}}</td>
                 </div>
                 <div class="col-3 col-sm-4 col-md-3">
-                    <td class="labelForm"><input type="button" value="Pagar" onclick="pagar('{% url 'doctorshots:pagar' venta.id %}');ruta1javascript:window.location.reload()" class="btn btn-success"></td>
+                    <td class="labelForm"><input type="button" value="Pagar"  onclick="pagar('{% url 'doctorshots:pagar' venta.id %}');" class="btn btn-success">                    <input type="button" value="Ver" onclick="verDetalle('{%url 'doctorshots:detalleventa' venta.id %}');" class="btn btn-success" data-toggle="modal" data-target="#modalVenta">
+                    </td>
                 </div>
                 {% endif %}
             </tr>   

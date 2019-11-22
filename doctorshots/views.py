@@ -240,10 +240,10 @@ def crearCategoria(request):
 
 '''VENTAS'''
 #Este metodo me inicia el formulari de las ventas
-def formVentas(request):
+def formVentas(request,mensaje):
     try:
         m =  Mesas.objects.all()        
-        contexto = {'mesas':m,  }
+        contexto = {'mesas':m, 'mensaje':mensaje  }
         return render(request,'doctorshots/ventas.html',contexto)                
     except Exception as e:
         return HttpResponse(e)
@@ -253,6 +253,8 @@ def formNuevaMesa(request):
     ses = request.session.get('logueado',False)
     if ses and ses[3]=='2':        
         return render(request,'doctorshots/nuevaMesa.html')
+
+
 def guardarmesa(request):
     try:
         idmesa = request.POST['numeroMesa']  
@@ -261,7 +263,7 @@ def guardarmesa(request):
         )
         mesa.save()
         
-        return HttpResponseRedirect(reverse ('doctorshots:formventas'))
+        return HttpResponseRedirect(reverse ('doctorshots:formventas',('mesaAdd',)))
 
 
     except Exception as e:
@@ -339,12 +341,12 @@ def agregarProducto(request):
             v.save()
             print(pro.cantidad)
             pro.save()
-            return HttpResponseRedirect(reverse('doctorshots:formventas'))
+            return HttpResponseRedirect(reverse('doctorshots:formventas',args=('productoAdd',)))
             
         else:
             # si no se manda mensaje
             print("sin  stock en el inventario")
-            return HttpResponseRedirect(reverse('doctorshots:formventas'))
+            return HttpResponseRedirect(reverse('doctorshots:formventas',args=('sinStock',)))
                                                                                                                                     
     except Exception as e:
         print('entro acá')
@@ -357,13 +359,35 @@ def carta(request):
 
 def pagar(request, id):
     try:
-        venta = Ventas.objects.get(pk=id)
+        venta = Ventas.objects.get(pk=id)        
         venta.estado=False
         
         mesa = Mesas.objects.get(pk= venta.mesa_id)
         mesa.disponible=True
         venta.save()
         mesa.save()
-        return HttpResponseRedirect(reverse('doctorshots:formventas'))
+        return HttpResponseRedirect(reverse('doctorshots:formventas',args=('Pagado',)))
+    except Exception as e:
+        return HttpResponse(e)
+
+def detalleVenta(request,id):
+    try:
+        from django.core import serializers
+        venta = Ventas.objects.get(pk=id)
+        detalle = DetalleVenta.objects.filter(venta=venta).values('precio','cantidad','venta_id','producto__nombreProducto')
+        '''
+        diccionario=[]
+        i=0
+        for x in detalle:
+            print(x.venta.id)
+            print(x.producto.id)
+            print(x.producto.nombreProducto)
+            print(x.cantidad)
+            print(x.precio)
+            diccionario[i] = model_to_dict(x)
+            i +=1
+            '''
+        return JsonResponse({'producto': list(detalle)})
+
     except Exception as e:
         return HttpResponse(e)

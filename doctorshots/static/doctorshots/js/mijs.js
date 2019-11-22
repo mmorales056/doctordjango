@@ -112,7 +112,7 @@ function formNuevaMesa(ruta, ruta1, idMesa) {
             method: 'GET',
             success: function(respuesta) {
                 document.getElementById("comanda").innerHTML = respuesta
-                document.getElementById("comanda-pc").innerHTML = respuesta
+                    //document.getElementById("comanda-pc").innerHTML = respuesta
 
 
             },
@@ -123,7 +123,7 @@ function formNuevaMesa(ruta, ruta1, idMesa) {
 
     }
 }
-
+//este metodo 
 function llenar(ruta, categoria) {
     $.ajax({
         url: ruta,
@@ -138,14 +138,53 @@ function llenar(ruta, categoria) {
     });
 }
 
+
+//Este metodo se activa cuando se da en el boton pagar 
 function pagar(ruta) {
+    //se crea peticion ajax
     $.ajax({
+        //se captura la ruta de los views de python
         url: ruta,
         success: function() {
-            alert("Pagó")
+            //si larespuesta es correcta entra acá
+            alert("Pagó con exito");
+            //se actualiza la página 
+            location.replace("http://0.0.0.0:8000/doctorshots/ventas/Pagado");
+
         },
         error: function() {
-            console.log("erro");
+            //si hay error en la respuesta se imprime en la consola
+            console.log("error");
         }
     })
+}
+
+//ver detalle
+function verDetalle(ruta) {
+    $.ajax({
+        url: ruta,
+        dataType: "json",
+        success: function(respuesta) {
+            var salida = "";
+            for (const i in respuesta.producto) {
+                salida += "<tr>";
+
+                salida += "<td>" + respuesta.producto[i].producto__nombreProducto + "</td>";
+                salida += "<td>" + respuesta.producto[i].precio + "</td>";
+                salida += "<td>" + respuesta.producto[i].cantidad + "</td>";
+                salida += "</tr>";
+
+            }
+
+
+
+
+            document.getElementById("detalle").innerHTML = salida;
+
+        },
+        error: function() {
+            alert('error');
+        }
+
+    });
 }

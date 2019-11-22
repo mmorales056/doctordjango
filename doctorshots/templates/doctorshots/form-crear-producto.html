@@ -14,7 +14,7 @@
                                 ya existe un producto con este código
                             </div>
                             {% endif %}
-                            <form action="{% url 'doctorshots:guardarproducto'%}" method="POST">
+                            <form action="{% url 'doctorshots:guardarproducto'%}" method="POST" autocomplete="off">
                                 {% csrf_token %}
 
                                 <div class="input-group mb-3">

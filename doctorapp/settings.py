@@ -25,7 +25,7 @@ SECRET_KEY = '%e^7*62xh5o*94&p7whc=8@7qt0#cw(soh@#1#@#k=vqj0h^zg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['0.0.0.0','192.168.1.70']
 
 
 # Application definition
@@ -75,9 +75,13 @@ WSGI_APPLICATION = 'doctorapp.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+      'default': {
+        'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'ejemplo',
+            'USER': 'mateo',
+            'PASSWORD': 'Mateo12345',
+            'HOST': 'localhost',
+            'PORT': '3306',
     }
 }
 

@@ -54,11 +54,15 @@ class Ventas(models.Model):
     total = models.FloatField()
     estado = models.BooleanField(default=True)
     fecha = models.CharField(max_length=40, default='0000-00-00 00:00:00.000000')
+    
 
 class DetalleVenta(models.Model):
     venta = models.ForeignKey(Ventas, on_delete=models.DO_NOTHING)
     producto =models.ForeignKey(Productos, on_delete=models.DO_NOTHING)
     precio = models.FloatField()
     cantidad = models.IntegerField()
+    
+    def __str__(self):
+        return str(self.producto)
     
 
