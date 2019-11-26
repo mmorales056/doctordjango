@@ -2,7 +2,7 @@
 {% load staticfiles%}
 
  {% block titulo %} Welcome to Doctor Shot {% endblock %} 
- {% block body %}<body> {% endblock %}
+ {% block body %}<body > {% endblock %}
   {% block header %} <header class="header"> {% endblock %}
 
 
@@ -19,8 +19,60 @@
       
 
      {% elif request.session.logueado.3 == '2' or request.session.logueado.3 == '1' %}
-    <div class="rotateIn animated letra">¡¡Bienvenido {{ request.session.logueado.1 }}!!</div> 
-    <!-- <img src="{% static 'doctorshots/img/baccccccccck.gif" >   -->
+    
+     <section class="our-webcoderskull padding-lg">
+      <div class="container">
+        <div class="row heading heading-icon">
+            <h2>Reportes</h2>
+        </div>
+        <ul class="row">
+          <li class="col-12 col-md-6 col-lg-3">
+              <div class="cnt-block equal-hight" style="height: 349px;">
+                <h3><a onclick="today('{% url 'doctorshots:reportediaventa' %}');" data-toggle="modal" data-target="#modalgrafica">ventas de hoy</a></h3>
+                <h1 class="Ancient">HOY</h1>
+              </div>
+          </li>
+          <li class="col-12 col-md-6 col-lg-3">
+            <div class="cnt-block equal-hight" style="height: 349px;">
+              <h3><a  data-toggle="modal" data-target="#modalgrafica">ventas de hoy</a></h3>
+              <h1 class="Ancient">SEMANA</h1>
+            </div>
+          </li>
+          <li class="col-12 col-md-6 col-lg-3">
+            <div class="cnt-block equal-hight" style="height: 349px;">
+              <h3><a  data-toggle="modal" data-target="#modalgrafica">ventas de hoy</a></h3>
+              <h1 class="Ancient">MES</h1>
+            </div>
+           </li>
+          <li class="col-12 col-md-6 col-lg-3">
+            <div class="cnt-block equal-hight" style="height: 349px;">
+              <h3><a  data-toggle="modal" data-target="#modalgrafica">ventas de hoy</a></h3>
+              <h1 class="Ancient">AÑO</h1>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- modal con grafica -->
+    
+    <div class="modal fade" id="modalgrafica" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">reporte</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+              </div>
+              <div class="modal-body" id="editarProducto">
+                <figure><canvas id="speedChart" class="grafica" width="600" height="400"></canvas></figure>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+      </div>
+  </div>
    
      {% endif %}
    {% endblock %}

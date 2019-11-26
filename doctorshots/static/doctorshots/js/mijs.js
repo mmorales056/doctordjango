@@ -112,7 +112,7 @@ function formNuevaMesa(ruta, ruta1, idMesa) {
             method: 'GET',
             success: function(respuesta) {
                 document.getElementById("comanda").innerHTML = respuesta
-                    //document.getElementById("comanda-pc").innerHTML = respuesta
+                document.getElementById("comanda-pc").innerHTML = respuesta
 
 
             },
@@ -123,7 +123,7 @@ function formNuevaMesa(ruta, ruta1, idMesa) {
 
     }
 }
-//este metodo 
+
 function llenar(ruta, categoria) {
     $.ajax({
         url: ruta,
@@ -138,26 +138,89 @@ function llenar(ruta, categoria) {
     });
 }
 
-
-//Este metodo se activa cuando se da en el boton pagar 
 function pagar(ruta) {
-    //se crea peticion ajax
     $.ajax({
-        //se captura la ruta de los views de python
         url: ruta,
         success: function() {
-            //si larespuesta es correcta entra acá
-            alert("Pagó con exito");
-            //se actualiza la página 
-            location.replace("http://0.0.0.0:8000/doctorshots/ventas/Pagado");
-
+            alert("Pagó")
         },
         error: function() {
-            //si hay error en la respuesta se imprime en la consola
-            console.log("error");
+            console.log("erro");
         }
     })
 }
+// reportes
+function today(ruta){
+    $.ajax({
+        url: ruta,
+        dataType: "json",
+        success: function(respuesta) {
+            
+            var nombres = '';
+            var datos = '';
+
+            for(var i=0;i<respuesta.producto.length;i++)
+            {
+                
+                nombres += respuesta.producto[i].producto__nombreProducto  + ',';
+                datos += respuesta.producto[i].cantidad  + ', ';
+                
+                
+            }
+
+        
+            nombres=nombres.substr(0,(nombres.length-1))
+            datos=datos.substr(0,(datos.length-2))
+
+           
+            var labelsmy = []
+            labelsmy = nombres.split(",");
+            console.log(labelsmy)
+            
+
+            datamy = datos.split(",");
+            console.log(datamy)
+
+
+
+
+            // espacio del chart
+            new Chart(document.getElementsByClassName("grafica"), {
+                type: 'bar',
+                data: {
+                  labels: labelsmy,
+                  datasets: [
+                    {
+                      label: "venta (unidades)",
+                      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+                      data: datamy
+                    }
+                  ]
+                },
+                options: {
+                  legend: { display: false },
+                  title: {
+                    display: true,
+                    text: 'cantidades vendidas hoy'
+                  }
+                }
+            });
+
+
+
+            // espacio del chart
+
+
+            
+
+            
+        },
+        error: function() {
+            alert('error');
+        }
+    });
+}        
+
 
 //ver detalle
 function verDetalle(ruta) {
