@@ -153,25 +153,30 @@ function pagar(ruta) {
 function today(ruta){
     $.ajax({
         url: ruta,
-        dataType: "json",
+        // dataType: "json",
         success: function(respuesta) {
+            respuesta = JSON.parse(respuesta);
             
             var nombres = '';
             var datos = '';
+            
 
-            for(var i=0;i<respuesta.producto.length;i++)
-            {
+            for(var i=0;i<respuesta.length;i++)
+                {
                 
-                nombres += respuesta.producto[i].producto__nombreProducto  + ',';
-                datos += respuesta.producto[i].cantidad  + ', ';
+                    nombres += respuesta[i].fields.nombre  + ',';
+                    datos += respuesta[i].fields.cantidad  + ', ';
                 
                 
             }
+            
+
 
         
             nombres=nombres.substr(0,(nombres.length-1))
             datos=datos.substr(0,(datos.length-2))
-
+            console.log(nombres)
+            console.log(datos)
            
             var labelsmy = []
             labelsmy = nombres.split(",");
@@ -185,14 +190,34 @@ function today(ruta){
 
 
             // espacio del chart
+            // new Chart(document.getElementsByClassName("grafica"), {
+            //     type: 'bar',
+            //     data: {
+            //       labels: labelsmy,
+            //       backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            //       datasets: [
+            //         {
+            //           label: "venta (unidades)",
+            //           data: datamy
+            //         }
+            //       ]
+            //     },
+            //     options: {
+            //       legend: { display: false },
+            //       title: {
+            //         display: true,
+            //         text: 'cantidades vendidas hoy'
+            //       }
+            //     }
+            // });
             new Chart(document.getElementsByClassName("grafica"), {
                 type: 'bar',
                 data: {
                   labels: labelsmy,
                   datasets: [
                     {
-                      label: "venta (unidades)",
-                      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+                      label: "Unidades (Vendidas Hoy)",
+                      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
                       data: datamy
                     }
                   ]
@@ -201,7 +226,7 @@ function today(ruta){
                   legend: { display: false },
                   title: {
                     display: true,
-                    text: 'cantidades vendidas hoy'
+                    text: 'Productos vendidos en el dia'
                   }
                 }
             });
@@ -216,7 +241,7 @@ function today(ruta){
             
         },
         error: function() {
-            alert('error');
+            console.log('error');
         }
     });
 }        

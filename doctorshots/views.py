@@ -6,6 +6,7 @@ from doctorshots.models import Usuarios,Productos, CategoriaProducto, Mesas, Ven
 from datetime import date
 from datetime import datetime
 import json
+from django.core import serializers
 
 
 
@@ -395,17 +396,50 @@ def reportediaVenta(request):
         fecha_hoy1 = (str(date.today())+' '+'00:00:00.000000')
         fecha_hoy2 = (str(date.today())+' '+'99:99:99-999999')
         # guardamos los id retornados por el query de ventas en vector
-
+        # select sum(cantidad) from doctorshots_detalleventa where producto_id = 1;
         ventas = Ventas.objects.raw("SELECT * FROM doctorshots_ventas where fecha between '"+fecha_hoy1+"' and '"+fecha_hoy2+"'")
         idventas = []
         for i in range(len(ventas)):
             idventas.append(ventas[i].id)
+
+
+        d = ''
+        for i in idventas:
+
+            d += 'dt.venta_id = ' + str(i) + ' OR '
+        sprod = (d[:len(d)-4])
         # guardamos los id de detalle en vector
-        detalleventa = DetalleVenta.objects.filter(venta_id__in=idventas).values('cantidad','producto__nombreProducto')
+        idprod = DetalleVenta.objects.all().filter(venta_id__in=idventas)
+        lista_nueva = []
+        for i in list(idprod):
+            if i not in lista_nueva:
+                lista_nueva.append(i.producto_id)
         
+        lista_nueva = list(set(lista_nueva)) 
         
+    
+        s = ''
+        for i in lista_nueva:
+
+            s += 'dt.producto_id = ' + str(i) + ' OR '
+        sdet = (s[:len(s)-3])
+
+
+        detalleVenta = DetalleVenta.objects.raw("select dt.id,sum(dt.cantidad) as cantidad,dt.producto_id,p.nombreProducto from doctorshots_detalleventa as dt inner join doctorshots_productos as p where ("+sprod+") AND ("+sdet+") and dt.producto_id = p.id group by dt.producto_id")
+
+        productos = Productos.objects.filter(id__in=lista_nueva).values('id','nombreProducto')
+        posts_serialized = serializers.serialize('json', detalleVenta )
         
-        return JsonResponse({'producto': list(detalleventa)})
+        y = json.loads(posts_serialized)
+        for i in range(len(y)):
+            for k in range(len(productos)):
+                if y[i]['fields']['producto'] == productos[k]['id']:
+                        y[i]['fields']['nombre'] = productos[k]['nombreProducto']
+        y = json.dumps(list(y))
+        print(detalleVenta)
+        
+
+        return JsonResponse(y, safe=False) 
 
 
 
