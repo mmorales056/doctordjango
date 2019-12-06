@@ -5,16 +5,21 @@ from django.forms.models import model_to_dict
 from doctorshots.models import Usuarios,Productos, CategoriaProducto, Mesas, Ventas, DetalleVenta
 from datetime import date
 from datetime import datetime
+import json
+from django.core import serializers
+
 
 
 # Create your views here.
 '''inicio'''
-# Este metodo se encarga de pintarme redireccionarme al index   
+# Este metodo se encarga de pintarme redireccionarme al index
 def index(request):
+
     return render(request,'doctorshots/index.html')
 
+
 '''login'''
-# Este metodo se encarga de pintarme redireccionarme al fornmulario login        
+# Este metodo se encarga de pintarme redireccionarme al fornmulario login
 def formularioLogin(request,mensaje):
     contexto = {'mensaje':mensaje }
     return render(request,'doctorshots/formulario-login.html',contexto)
@@ -24,17 +29,17 @@ def login(request):
         usuario = request.POST['usuario']
         password = request.POST['clave']
         q= Usuarios.objects.get(usuario = usuario)
-       
+
 
         #Fecha actual
 
-        
+
         if q.clave == password:
             request.session['logueado'] = [q.cedula, q.nombres, q.clave, q.Rol, q.id ]
             return render(request,'doctorshots/index.html')
         else:
             return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=('password invalid',)))
-                                                
+
     except Exception as e:
         return HttpResponseRedirect(reverse ('doctorshots:formlogin',args=(e,)))
         #return HttpResponse(e)
@@ -43,7 +48,7 @@ def logout(request):
     try:
         del request.session['logueado']
         return render(request, 'doctorshots/index.html')
-    
+
     except Exception as e:
         return render(request, 'doctorshots/index.html')
 
@@ -59,7 +64,7 @@ def formularioEmpleados(request, mensaje):
         else:
             contexto = {'s':'fallo'}
             return  render(request,'doctorshots/index.html',contexto)
-        
+
     except Exception as e:
         return HttpResponse(e)
 # Este metodo Guarda un empleado
@@ -76,9 +81,9 @@ def guardarEmpleado(request):
             )
            empleado.save()
            return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=('GuardadoCorrectamente',)))
-       else:           
+       else:
            return render(request,'doctorshots/index.html',{'s':'fallo'})
-   
+
    except Exception as e:
        return HttpResponseRedirect(reverse ('doctorshots:formempleado' ,args=(e,)))
 #Este metodo se encarga de cargarme el template para actualizar el empleado desde un escritorio
@@ -97,13 +102,13 @@ def actualizarEmpleado(request):
         q.cedula= request.POST['cedula']
         q.nombres= request.POST['nombres']
         q.usuario= request.POST['usuario']
-        q.clave= request.POST['clave']        
+        q.clave= request.POST['clave']
         q.save()
         return HttpResponseRedirect(reverse('doctorshots:formempleado' ,args=('actualizado correctamente',)))
-    
+
     except Exception as e:
         return HttpResponse(e)
-#Este metodo se encarga de cargarme el formulario para crear un empleado desde un movil 
+#Este metodo se encarga de cargarme el formulario para crear un empleado desde un movil
 def crearEmpleadoMovil(request):
     try:
         return render(request,'doctorshots/crear-empleado-movil.html')
@@ -124,12 +129,12 @@ def formularioProductos(request,mensaje):
     try:
         ses = request.session.get('logueado',False)
         if ses and ses[3]=='2':
-            #CApturamos todas las categorias 
+            #CApturamos todas las categorias
             c = CategoriaProducto.objects.all()
             print(c)
             #Capturamos todos los prpdutos
             p = Productos.objects.all()
-            
+
             contexto= {'productos': p, 'categorias':c, 'mensaje': mensaje}
             return render(request,'doctorshots/form-crear-producto.html',contexto)
     except Exception as e:
@@ -140,7 +145,7 @@ def guardarProducto(request):
         c = request.POST['categoria']
         h = request.POST.get('habilitado', 'off') == 'on'
 
-        print(h)                                     
+        print(h)
         producto = Productos(
             codigoProducto = request.POST['codigoProducto'],
             nombreProducto= request.POST['nombreProducto'],
@@ -156,9 +161,9 @@ def guardarProducto(request):
         producto.save()
         return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=('GuardadoCorrectamente',)))
     except Exception as e:
-        
+
         return HttpResponseRedirect(reverse ('doctorshots:formproductos' ,args=(e,)))
-#Metodo que me lista los productos    
+#Metodo que me lista los productos
 def verProducto(request,id):
     try:
         p= Productos.objects.get(pk=id)
@@ -166,18 +171,18 @@ def verProducto(request,id):
         return JsonResponse(diccionario)
     except Exception as e:
         return HttpResponse(e)
-#MEtodo que me crea un producto    
+#MEtodo que me crea un producto
 def crearProductoMovil(request):
 
     try:
         ses = request.session.get('logueado',False)
         if ses and ses[3]=='2':
-            #CApturamos todas las categorias 
+            #CApturamos todas las categorias
             c = CategoriaProducto.objects.all()
             print(c)
             #Capturamos todos los prpdutos
             p = Productos.objects.all()
-            
+
             contexto= {'productos': p, 'categorias':c}
         return render(request,'doctorshots/crear-producto-movil.html',contexto)
     except Exception as e:
@@ -186,7 +191,7 @@ def crearProductoMovil(request):
 def formularioEditarProducto(request,id):
     try:
         ses = request.session.get('logueado',False)
-        if ses and ses[3]=='2':           
+        if ses and ses[3]=='2':
             p = Productos.objects.get(pk=id)
             print(p.categoria)
             c = CategoriaProducto.objects.get(descripcion=p.categoria)
@@ -194,8 +199,8 @@ def formularioEditarProducto(request,id):
             return render(request,'doctorshots/form-editar-producto.html',{'producto':p, 'categoria': c})
         else:
             return render(request,'doctorshots/index.html',{'s':'fallo'})
-            
-    except Exception as e:        
+
+    except Exception as e:
         return HttpResponse(e)
 #Metodo que toma los datos del formulario editar y los actualiza
 def actualizarProducto(request):
@@ -205,7 +210,7 @@ def actualizarProducto(request):
             h= True
         else:
             h= False
-            
+
         id = request.POST['id']
         p = Productos.objects.get(pk=id)
         p.codigoProducto= request.POST['codigoProducto']
@@ -226,7 +231,7 @@ def eliminarProducto(request,id):
         return HttpResponseRedirect(reverse('doctorshots:formproductos',args=('ELiminado con exito',)))
     except Exception as e:
         return HttpResponseRedirect(e)
-#Metodo que me crea una categoria nueva 
+#Metodo que me crea una categoria nueva
 def crearCategoria(request):
     try:
         categoria = CategoriaProducto(
@@ -242,40 +247,40 @@ def crearCategoria(request):
 #Este metodo me inicia el formulari de las ventas
 def formVentas(request,mensaje):
     try:
-        m =  Mesas.objects.all()        
+        m =  Mesas.objects.all()
         contexto = {'mesas':m, 'mensaje':mensaje  }
-        return render(request,'doctorshots/ventas.html',contexto)                
+        return render(request,'doctorshots/ventas.html',contexto)
     except Exception as e:
         return HttpResponse(e)
 
-#Este metodo me carga la vista a la modal de crear nueva mesa 
+#Este metodo me carga la vista a la modal de crear nueva mesa
 def formNuevaMesa(request):
     ses = request.session.get('logueado',False)
-    if ses and ses[3]=='2':        
+    if ses and ses[3]=='2':
         return render(request,'doctorshots/nuevaMesa.html')
 
 
 def guardarmesa(request):
     try:
-        idmesa = request.POST['numeroMesa']  
+        idmesa = request.POST['numeroMesa']
         mesa = Mesas (
             numeroMesa = idmesa
         )
         mesa.save()
-        
+
         return HttpResponseRedirect(reverse ('doctorshots:formventas',('mesaAdd',)))
 
 
     except Exception as e:
         return HttpResponse(e)
 
-    
 
-    
+
+
 
 def nuevaVenta(request):
     try:
-        mesa = request.GET['idMesa']    
+        mesa = request.GET['idMesa']
         m= Mesas.objects.get(pk=mesa)
         v= Ventas.objects.get(mesa_id=mesa,estado=1)
         print(v.estado)
@@ -289,7 +294,7 @@ def nuevaVenta(request):
             m = Usuarios.objects.get(cedula=ses[0])
             now = datetime.now()
 
-            v= Ventas( 
+            v= Ventas(
                 mesero=m,
                 mesa=mesa ,
                 total=0,
@@ -300,10 +305,10 @@ def nuevaVenta(request):
             c = CategoriaProducto.objects.all()
             p = Productos.objects.all()
             contexto = {'categorias': c, 'venta':v, 'productos':p}
-            return render(request,'doctorshots/nuevaVenta.html',contexto)    
-    
-    
-    
+            return render(request,'doctorshots/nuevaVenta.html',contexto)
+
+
+
 
 def listaprodcat(request):
     p = Productos.objects.filter(categoria=request.GET['categoria'])
@@ -313,7 +318,7 @@ def listaprodcat(request):
 
 def agregarProducto(request):
     try:
-        #CApturamos mesero y mesa 
+        #CApturamos mesero y mesa
         mesero = Usuarios.objects.get(cedula=request.POST['mesero'])
         mesa = Mesas.objects.get(pk=request.POST['mesa'])
         v= Ventas.objects.get(mesa=mesa, estado=1)
@@ -328,40 +333,40 @@ def agregarProducto(request):
         )
         #calculamos que en el stock haya existencia del producto
         cantidadInventario = int(pro.cantidad)
-        cantidadPedido = int(detalle.cantidad)                 
+        cantidadPedido = int(detalle.cantidad)
         necesario= int(cantidadInventario)- int(cantidadPedido)
         #si hay existencia se guarda
         if necesario > 0:
-            detalle.save()                
+            detalle.save()
             v.total+= detalle.precio * float(int(detalle.cantidad))
             cantidadInventario = int(pro.cantidad)
-            cantidadPedido = int(detalle.cantidad)     
-            print('cantidad'+str(cantidadInventario))            
+            cantidadPedido = int(detalle.cantidad)
+            print('cantidad'+str(cantidadInventario))
             pro.cantidad= int(cantidadInventario-cantidadPedido)
             v.save()
             print(pro.cantidad)
             pro.save()
             return HttpResponseRedirect(reverse('doctorshots:formventas',args=('productoAdd',)))
-            
+
         else:
             # si no se manda mensaje
             print("sin  stock en el inventario")
             return HttpResponseRedirect(reverse('doctorshots:formventas',args=('sinStock',)))
-                                                                                                                                    
+
     except Exception as e:
         print('entro acá')
         return HttpResponse(e)
 
 def carta(request):
-    return render(request, 'doctorshots/carta.html')  
+    return render(request, 'doctorshots/carta.html')
 
 
 
 def pagar(request, id):
     try:
-        venta = Ventas.objects.get(pk=id)        
+        venta = Ventas.objects.get(pk=id)
         venta.estado=False
-        
+
         mesa = Mesas.objects.get(pk= venta.mesa_id)
         mesa.disponible=True
         venta.save()
@@ -375,19 +380,68 @@ def detalleVenta(request,id):
         from django.core import serializers
         venta = Ventas.objects.get(pk=id)
         detalle = DetalleVenta.objects.filter(venta=venta).values('precio','cantidad','venta_id','producto__nombreProducto')
-        '''
-        diccionario=[]
-        i=0
-        for x in detalle:
-            print(x.venta.id)
-            print(x.producto.id)
-            print(x.producto.nombreProducto)
-            print(x.cantidad)
-            print(x.precio)
-            diccionario[i] = model_to_dict(x)
-            i +=1
-            '''
+        
         return JsonResponse({'producto': list(detalle)})
+
+    except Exception as e:
+        return HttpResponse(e)
+
+# reportes
+
+def reportediaVenta(request):
+    try:
+        from django.core import serializers
+        # capturamos las fechas de el dia
+
+        fecha_hoy1 = (str(date.today())+' '+'00:00:00.000000')
+        fecha_hoy2 = (str(date.today())+' '+'99:99:99-999999')
+        # guardamos los id retornados por el query de ventas en vector
+        # select sum(cantidad) from doctorshots_detalleventa where producto_id = 1;
+        ventas = Ventas.objects.raw("SELECT * FROM doctorshots_ventas where fecha between '"+fecha_hoy1+"' and '"+fecha_hoy2+"'")
+        idventas = []
+        for i in range(len(ventas)):
+            idventas.append(ventas[i].id)
+
+
+        d = ''
+        for i in idventas:
+
+            d += 'dt.venta_id = ' + str(i) + ' OR '
+        sprod = (d[:len(d)-4])
+        # guardamos los id de detalle en vector
+        idprod = DetalleVenta.objects.all().filter(venta_id__in=idventas)
+        lista_nueva = []
+        for i in list(idprod):
+            if i not in lista_nueva:
+                lista_nueva.append(i.producto_id)
+        
+        lista_nueva = list(set(lista_nueva)) 
+        
+    
+        s = ''
+        for i in lista_nueva:
+
+            s += 'dt.producto_id = ' + str(i) + ' OR '
+        sdet = (s[:len(s)-3])
+
+
+        detalleVenta = DetalleVenta.objects.raw("select dt.id,sum(dt.cantidad) as cantidad,dt.producto_id,p.nombreProducto from doctorshots_detalleventa as dt inner join doctorshots_productos as p where ("+sprod+") AND ("+sdet+") and dt.producto_id = p.id group by dt.producto_id")
+
+        productos = Productos.objects.filter(id__in=lista_nueva).values('id','nombreProducto')
+        posts_serialized = serializers.serialize('json', detalleVenta )
+        
+        y = json.loads(posts_serialized)
+        for i in range(len(y)):
+            for k in range(len(productos)):
+                if y[i]['fields']['producto'] == productos[k]['id']:
+                        y[i]['fields']['nombre'] = productos[k]['nombreProducto']
+        y = json.dumps(list(y))
+        print(detalleVenta)
+        
+
+        return JsonResponse(y, safe=False) 
+
+
 
     except Exception as e:
         return HttpResponse(e)

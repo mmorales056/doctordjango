@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+   
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -11,8 +13,9 @@
     <link rel="stylesheet"  href="{% static 'doctorshots/css/modoResponsive.css' %}">
     <link rel="stylesheet"  href="{% static 'doctorshots/css/all.css' %}">
     <link rel="stylesheet"  href="{% static 'doctorshots/css/fontawesome.css' %}">
-    <link rel="stylesheet" href="{% static 'doctorshots/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'doctorshots/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'doctorshots/css/dataTables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'doctorshots/css/main.css' %}">
 
     <title> {% block titulo %} {% endblock  %}</title>
 </head>
@@ -53,9 +56,10 @@
 <!--ADMIN-->
 {% elif request.session.logueado.3 == '2' and request.session %}
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
-    <a class="navbar-brand" href="#">
-        <img src="{% static 'doctorshots/img/logo.png' %}" alt="logo">
-    </a>
+        <a class="navbar-brand" href="{% url 'doctorshots:inicio' %}">
+            <img src="{% static 'doctorshots/img/logo.png' %}" alt="logo">
+        </a>
+        
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -100,13 +104,18 @@
     </div>
 
     
-<script src="{% static 'doctorshots/js/jquery-3.3.1.slim.min.js' %}"></script>
-<script src="{% static 'doctorshots/js/jquery.min.js' %}"></script>
 
-<script src="{% static 'doctorshots/js/popper.min.js' %}"></script>
-<script src="{% static 'doctorshots/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'doctorshots/js/parallax.min.js'%}"></script>
-<script src="{% static 'doctorshots/js/mijs.js' %}"></script>
-
+    
+    <script src="{% static 'doctorshots/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'doctorshots/js/jquery.min.js' %}"></script>
+    <script src="{% static 'doctorshots/js/popper.min.js' %}"></script>
+    <script src="{% static 'doctorshots/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'doctorshots/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'doctorshots/js/parallax.min.js'%}"></script>
+    <script src="{% static 'doctorshots/js/mijs.js' %}"></script>
+    <script src="{% static 'doctorshots/js/chartat.js' %}"></script>
+    
+    
+    
 
 </html>
